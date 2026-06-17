@@ -3,9 +3,11 @@ import Navbar from "./components/Navbar";
 import TaxSlabPage from "./pages/TaxSlabPage";
 import PayrollPage from "./pages/PayrollPage";
 import DeductionPage from "./pages/DeductionPage";
+import { PageType } from "./types/navigation";
 
 function App() {
-  const [activePage, setActivePage] = useState("slabs");
+  const [activePage, setActivePage] =
+    useState<PageType>("slabs");
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -14,11 +16,19 @@ function App() {
         setActivePage={setActivePage}
       />
 
-      <div className="max-w-7xl mx-auto p-6">
-        {activePage === "slabs" && <TaxSlabPage />}
-        {activePage === "payroll" && <PayrollPage />}
-        {activePage === "deductions" && <DeductionPage />}
-      </div>
+      <main className="max-w-7xl mx-auto p-6">
+        {activePage === "slabs" && (
+          <TaxSlabPage />
+        )}
+
+        {activePage === "payroll" && (
+          <PayrollPage />
+        )}
+
+        {activePage === "deductions" && (
+          <DeductionPage />
+        )}
+      </main>
     </div>
   );
 }

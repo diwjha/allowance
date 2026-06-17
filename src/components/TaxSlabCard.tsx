@@ -1,19 +1,31 @@
+import { TaxSlab } from "../types/payroll";
+
+type TaxSlabCardProps = {
+  slab: TaxSlab;
+  index: number;
+  updateSlab: (
+    id: number,
+    field: keyof TaxSlab,
+    value: number
+  ) => void;
+  removeSlab: (id: number) => void;
+  canDelete: boolean;
+};
+
 export default function TaxSlabCard({
   slab,
   index,
   updateSlab,
   removeSlab,
   canDelete,
-}) {
+}: TaxSlabCardProps) {
   return (
     <div className="bg-white shadow rounded-xl p-5">
-
       <h2 className="font-semibold text-lg mb-5">
         Tax Slab {index + 1}
       </h2>
 
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
-
         <div>
           <label className="block mb-2 text-sm">
             Tax Rate
@@ -31,7 +43,7 @@ export default function TaxSlabCard({
                 updateSlab(
                   slab.id,
                   "rate",
-                  e.target.value
+                  Number(e.target.value)
                 )
               }
               className="border w-full p-3"
@@ -56,7 +68,7 @@ export default function TaxSlabCard({
                 updateSlab(
                   slab.id,
                   "start",
-                  e.target.value
+                  Number(e.target.value)
                 )
               }
               className="border w-full p-3"
@@ -81,14 +93,13 @@ export default function TaxSlabCard({
                 updateSlab(
                   slab.id,
                   "end",
-                  e.target.value
+                  Number(e.target.value)
                 )
               }
               className="border w-full p-3"
             />
           </div>
         </div>
-
       </div>
 
       {canDelete && (

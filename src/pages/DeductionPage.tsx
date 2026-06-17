@@ -1,59 +1,70 @@
 import { useState } from "react";
 import DeductionCard from "../components/DeductionCard";
+import { Deduction } from "../types/payroll";
 
 export default function DeductionPage() {
-  const [annualSalary, setAnnualSalary] = useState(1200000);
+  const [annualSalary, setAnnualSalary] =
+    useState<number>(1200000);
 
-  const [deductions, setDeductions] = useState([
-    {
-      id: 1,
-      name: "Provident Fund (PF)",
-      percentage: 12,
-    },
-    {
-      id: 2,
-      name: "Professional Tax",
-      percentage: 2,
-    },
-    {
-      id: 3,
-      name: "Health Insurance",
-      percentage: 3,
-    },
-    {
-      id: 4,
-      name: "Labour Welfare Fund",
-      percentage: 1,
-    },
-  ]);
+  const [deductions, setDeductions] =
+    useState<Deduction[]>([
+      {
+        id: 1,
+        name: "Provident Fund (PF)",
+        percentage: 12,
+      },
+      {
+        id: 2,
+        name: "Professional Tax",
+        percentage: 2,
+      },
+      {
+        id: 3,
+        name: "Health Insurance",
+        percentage: 3,
+      },
+      {
+        id: 4,
+        name: "Labour Welfare Fund",
+        percentage: 1,
+      },
+    ]);
 
-  const addDeduction = () => {
+  const addDeduction = (): void => {
     setDeductions([
       ...deductions,
       {
         id: Date.now(),
         name: "",
-        percentage: "",
+        percentage: 0,
       },
     ]);
   };
 
-  const removeDeduction = (id) => {
+  const removeDeduction = (
+    id: number
+  ): void => {
     setDeductions(
-      deductions.filter((d) => d.id !== id)
+      deductions.filter(
+        (deduction) =>
+          deduction.id !== id
+      )
     );
   };
 
   const updateDeduction = (
-    id,
-    field,
-    value
-  ) => {
+    id: number,
+    field: keyof Deduction,
+    value: string | number
+  ): void => {
     setDeductions(
-      deductions.map((d) =>
-        d.id === id
-          ? { ...d, [field]: value }
-          : d
+      deductions.map((deduction) =>
+        deduction.id === id
+          ? {
+              ...deduction,
+              [field]: value,
+            }
+          : deduction
       )
     );
   };
@@ -61,12 +72,13 @@ export default function DeductionPage() {
   const totalDeductionPercentage =
     deductions.reduce(
       (sum, item) =>
-        sum + (Number(item.percentage) || 0),
+        sum + item.percentage,
       0
     );
 
   const totalDeductionAmount =
-    (annualSalary * totalDeductionPercentage) /
+    (annualSalary *
+      totalDeductionPercentage) /
     100;
 
   const netSalary =
@@ -94,7 +106,10 @@ export default function DeductionPage() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2 text-indigo-600">
-            ₹ {annualSalary.toLocaleString("en-IN")}
+            ₹{" "}
+            {annualSalary.toLocaleString(
+              "en-IN"
+            )}
           </h2>
         </div>
 
@@ -121,7 +136,10 @@ export default function DeductionPage() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2 text-green-600">
-            ₹ {netSalary.toLocaleString("en-IN")}
+            ₹{" "}
+            {netSalary.toLocaleString(
+              "en-IN"
+            )}
           </h2>
         </div>
       </div>
@@ -146,6 +164,7 @@ export default function DeductionPage() {
               )
             }
             className="border rounded-r-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter Annual Salary"
           />
         </div>
       </div>
@@ -172,16 +191,24 @@ export default function DeductionPage() {
         </div>
 
         <div className="space-y-4">
-          {deductions.map((deduction, index) => (
-            <DeductionCard
-              key={deduction.id}
-              deduction={deduction}
-              index={index}
-              updateDeduction={updateDeduction}
-              removeDeduction={removeDeduction}
-              canDelete={deductions.length > 1}
-            />
-          ))}
+          {deductions.map(
+            (deduction, index) => (
+              <DeductionCard
+                key={deduction.id}
+                deduction={deduction}
+                index={index}
+                updateDeduction={
+                  updateDeduction
+                }
+                removeDeduction={
+                  removeDeduction
+                }
+                canDelete={
+                  deductions.length > 1
+                }
+              />
+            )
+          )}
         </div>
       </div>
 
@@ -209,14 +236,15 @@ export default function DeductionPage() {
               className="flex justify-between"
             >
               <span>
-                {item.name || "Deduction"}
+                {item.name ||
+                  "Deduction"}
               </span>
 
               <span className="text-red-600">
                 ₹{" "}
                 {(
                   (annualSalary *
-                    (Number(item.percentage) || 0)) /
+                    item.percentage) /
                   100
                 ).toLocaleString("en-IN")}
               </span>
@@ -238,7 +266,10 @@ export default function DeductionPage() {
             <span>Net Salary</span>
 
             <span className="text-green-600">
-              ₹ {netSalary.toLocaleString("en-IN")}
+              ₹{" "}
+              {netSalary.toLocaleString(
+                "en-IN"
+              )}
             </span>
           </div>
         </div>

@@ -1,70 +1,87 @@
 import { useState } from "react";
 import AllowanceCard from "../components/AllowanceCard";
+import { Allowance } from "../types/payroll";
 
 export default function PayrollPage() {
-  const [fixedSalary, setFixedSalary] = useState(1200000);
+  const [fixedSalary, setFixedSalary] =
+    useState<number>(1200000);
 
-  const [allowances, setAllowances] = useState([
-    {
-      id: 1,
-      name: "HRA",
-      percentage: 40,
-    },
-    {
-      id: 2,
-      name: "Transport Allowance",
-      percentage: 10,
-    },
-    {
-      id: 3,
-      name: "Medical Allowance",
-      percentage: 5,
-    },
-    {
-      id: 4,
-      name: "Special Allowance",
-      percentage: 15,
-    },
-  ]);
+  const [allowances, setAllowances] =
+    useState<Allowance[]>([
+      {
+        id: 1,
+        name: "HRA",
+        percentage: 40,
+      },
+      {
+        id: 2,
+        name: "Transport Allowance",
+        percentage: 10,
+      },
+      {
+        id: 3,
+        name: "Medical Allowance",
+        percentage: 5,
+      },
+      {
+        id: 4,
+        name: "Special Allowance",
+        percentage: 15,
+      },
+    ]);
 
-  const addAllowance = () => {
+  const addAllowance = (): void => {
     setAllowances([
       ...allowances,
       {
         id: Date.now(),
         name: "",
-        percentage: "",
+        percentage: 0,
       },
     ]);
   };
 
-  const removeAllowance = (id) => {
+  const removeAllowance = (
+    id: number
+  ): void => {
     setAllowances(
-      allowances.filter((a) => a.id !== id)
-    );
-  };
-
-  const updateAllowance = (id, field, value) => {
-    setAllowances(
-      allowances.map((a) =>
-        a.id === id
-          ? { ...a, [field]: value }
-          : a
+      allowances.filter(
+        (allowance) => allowance.id !== id
       )
     );
   };
 
-  const totalAllowancePercentage = allowances.reduce(
-    (sum, item) =>
-      sum + (Number(item.percentage) || 0),
-    0
-  );
+  const updateAllowance = (
+    id: number,
+    field: keyof Allowance,
+    value: string | number
+  ): void => {
+    setAllowances(
+      allowances.map((allowance) =>
+        allowance.id === id
+          ? {
+              ...allowance,
+              [field]: value,
+            }
+          : allowance
+      )
+    );
+  };
+
+  const totalAllowancePercentage =
+    allowances.reduce(
+      (sum, item) =>
+        sum + item.percentage,
+      0
+    );
 
   const totalAllowanceAmount =
-    (fixedSalary * totalAllowancePercentage) / 100;
+    (fixedSalary *
+      totalAllowancePercentage) /
+    100;
 
   const grossSalary =
-    Number(fixedSalary) + totalAllowanceAmount;
+    fixedSalary + totalAllowanceAmount;
 
   return (
     <div className="space-y-6">
@@ -88,7 +105,10 @@ export default function PayrollPage() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2 text-indigo-600">
-            ₹ {Number(fixedSalary).toLocaleString("en-IN")}
+            ₹{" "}
+            {fixedSalary.toLocaleString(
+              "en-IN"
+            )}
           </h2>
         </div>
 
@@ -116,12 +136,14 @@ export default function PayrollPage() {
 
           <h2 className="text-3xl font-bold mt-2 text-blue-600">
             ₹{" "}
-            {grossSalary.toLocaleString("en-IN")}
+            {grossSalary.toLocaleString(
+              "en-IN"
+            )}
           </h2>
         </div>
       </div>
 
-      {/* Fixed Salary Card */}
+      {/* Fixed Salary */}
       <div className="bg-white shadow rounded-xl p-6">
         <h2 className="text-xl font-semibold mb-4">
           Fixed Salary
@@ -136,7 +158,9 @@ export default function PayrollPage() {
             type="number"
             value={fixedSalary}
             onChange={(e) =>
-              setFixedSalary(Number(e.target.value))
+              setFixedSalary(
+                Number(e.target.value)
+              )
             }
             className="border rounded-r-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter Fixed Salary"
@@ -153,8 +177,8 @@ export default function PayrollPage() {
             </h2>
 
             <p className="text-slate-500 text-sm">
-              Add salary allowances offered by
-              company
+              Add salary allowances offered
+              by company
             </p>
           </div>
 
@@ -167,16 +191,24 @@ export default function PayrollPage() {
         </div>
 
         <div className="space-y-4">
-          {allowances.map((allowance, index) => (
-            <AllowanceCard
-              key={allowance.id}
-              allowance={allowance}
-              index={index}
-              updateAllowance={updateAllowance}
-              removeAllowance={removeAllowance}
-              canDelete={allowances.length > 1}
-            />
-          ))}
+          {allowances.map(
+            (allowance, index) => (
+              <AllowanceCard
+                key={allowance.id}
+                allowance={allowance}
+                index={index}
+                updateAllowance={
+                  updateAllowance
+                }
+                removeAllowance={
+                  removeAllowance
+                }
+                canDelete={
+                  allowances.length > 1
+                }
+              />
+            )
+          )}
         </div>
       </div>
 
@@ -189,9 +221,10 @@ export default function PayrollPage() {
         <div className="space-y-3">
           <div className="flex justify-between border-b pb-3">
             <span>Fixed Salary</span>
+
             <span>
               ₹{" "}
-              {Number(fixedSalary).toLocaleString(
+              {fixedSalary.toLocaleString(
                 "en-IN"
               )}
             </span>
@@ -202,13 +235,16 @@ export default function PayrollPage() {
               key={item.id}
               className="flex justify-between"
             >
-              <span>{item.name || "Allowance"}</span>
+              <span>
+                {item.name ||
+                  "Allowance"}
+              </span>
 
               <span>
                 ₹{" "}
                 {(
                   (fixedSalary *
-                    (Number(item.percentage) || 0)) /
+                    item.percentage) /
                   100
                 ).toLocaleString("en-IN")}
               </span>

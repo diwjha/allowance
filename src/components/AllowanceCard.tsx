@@ -1,15 +1,27 @@
+import { Allowance } from "../types/payroll";
+
+type AllowanceCardProps = {
+  allowance: Allowance;
+  index: number;
+  updateAllowance: (
+    id: number,
+    field: keyof Allowance,
+    value: string | number
+  ) => void;
+  removeAllowance: (id: number) => void;
+  canDelete: boolean;
+};
+
 export default function AllowanceCard({
   allowance,
   index,
   updateAllowance,
   removeAllowance,
   canDelete,
-}) {
+}: AllowanceCardProps) {
   return (
     <div className="bg-white p-5 rounded-xl shadow">
-
       <div className="grid md:grid-cols-2 gap-4">
-
         <input
           type="text"
           value={allowance.name}
@@ -36,13 +48,12 @@ export default function AllowanceCard({
               updateAllowance(
                 allowance.id,
                 "percentage",
-                e.target.value
+                Number(e.target.value)
               )
             }
             className="border w-full p-3"
           />
         </div>
-
       </div>
 
       {canDelete && (
