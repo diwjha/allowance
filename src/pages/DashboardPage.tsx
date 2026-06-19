@@ -1,63 +1,53 @@
 export default function DashboardPage() {
+  const stats = [
+    {
+      title: "Countries",
+      value: "3",
+      icon: "🌍",
+      bg: "bg-indigo-50",
+      color: "text-indigo-600",
+    },
+    {
+      title: "Allowances",
+      value: "8",
+      icon: "💰",
+      bg: "bg-green-50",
+      color: "text-green-600",
+    },
+    {
+      title: "Deductions",
+      value: "6",
+      icon: "📉",
+      bg: "bg-red-50",
+      color: "text-red-600",
+    },
+    {
+      title: "Tax Slabs",
+      value: "12",
+      icon: "📑",
+      bg: "bg-blue-50",
+      color: "text-blue-600",
+    },
+  ];
 
-const stats = [
-{
-title:"Countries",
-value:"3",
-icon:"🌍",
-bg:"bg-indigo-50",
-color:"text-indigo-600"
-},
-{
-title:"Allowances",
-value:"8",
-icon:"💰",
-bg:"bg-green-50",
-color:"text-green-600"
-},
-{
-title:"Deductions",
-value:"6",
-icon:"📉",
-bg:"bg-red-50",
-color:"text-red-600"
-},
-{
-title:"Tax Slabs",
-value:"12",
-icon:"📑",
-bg:"bg-blue-50",
-color:"text-blue-600"
-}
-];
+  const progress = [
+    ["Payroll Configuration", 85],
+    ["Tax Setup", 70],
+    ["Country Compliance", 92],
+  ];
 
+  const activity = [
+    ["🌍", "Country Added", "India payroll enabled"],
+    ["💰", "Allowance Updated", "HRA revised"],
+    ["📉", "Deduction Modified", "PF percentage changed"],
+  ];
 
-const progress=[
-["Payroll Configuration",85],
-["Tax Setup",70],
-["Country Compliance",92]
-];
+  return (
+    <div className="w-full space-y-10">
+      {/* HERO */}
 
-
-const activity=[
-["🌍","Country Added","India payroll enabled"],
-["💰","Allowance Updated","HRA revised"],
-["📉","Deduction Modified","PF percentage changed"]
-];
-
-
-return (
-
-<div className="w-full space-y-10">
-
-
-
-
-
-{/* HERO */}
-
-<section
-className="
+      <section
+        className="
 rounded-3xl
 bg-linear-to-r
 from-indigo-600
@@ -67,56 +57,43 @@ p-8
 text-white
 shadow-xl
 "
->
-
-
-<h1 className="
+      >
+        <h1
+          className="
 text-3xl
 md:text-5xl
 font-bold
-">
+"
+        >
+          Payroll Dashboard
+        </h1>
 
-Payroll Dashboard
-
-</h1>
-
-
-<p className="
+        <p
+          className="
 mt-4
 max-w-3xl
 text-indigo-100
 text-lg
 leading-relaxed
-">
+"
+        >
+          Manage payroll structure, salary rules, allowances, deductions and tax
+          compliance from one centralized platform.
+        </p>
 
-Manage payroll structure, salary rules,
-allowances, deductions and tax compliance
-from one centralized platform.
-
-</p>
-
-
-
-<div className="
+        <div
+          className="
 flex
 flex-wrap
 gap-4
 mt-8
-">
-
-
-{
-[
-"🌍 Global Payroll",
-"⚡ Automation",
-"📊 Analytics"
-]
-.map(item=>(
-
-
-<div
-key={item}
-className="
+"
+        >
+          {["🌍 Global Payroll", "⚡ Automation", "📊 Analytics"].map(
+            (item) => (
+              <div
+                key={item}
+                className="
 bg-white/20
 backdrop-blur
 px-5
@@ -124,56 +101,30 @@ py-3
 rounded-xl
 text-sm
 "
->
+              >
+                {item}
+              </div>
+            ),
+          )}
+        </div>
+      </section>
 
-{item}
+      {/* STATS */}
 
-</div>
-
-
-))
-
-}
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-{/* STATS */}
-
-
-
-<section>
-
-
-<div className="
+      <section>
+        <div
+          className="
 grid
 grid-cols-1
 sm:grid-cols-2
 xl:grid-cols-4
 gap-6
-">
-
-
-{
-stats.map(item=>(
-
-
-<div
-
-key={item.title}
-
-className="
+"
+        >
+          {stats.map((item) => (
+            <div
+              key={item.title}
+              className="
 bg-white
 rounded-3xl
 p-6
@@ -183,49 +134,38 @@ shadow-sm
 hover:shadow-lg
 transition
 "
-
-
->
-
-
-<div className="
+            >
+              <div
+                className="
 flex
 items-center
 justify-between
-">
-
-
-<div>
-
-
-<p className="
+"
+              >
+                <div>
+                  <p
+                    className="
 text-sm
 text-slate-500
-">
+"
+                  >
+                    {item.title}
+                  </p>
 
-{item.title}
-
-</p>
-
-
-<h2 className="
+                  <h2
+                    className="
 text-4xl
 font-bold
 mt-3
 text-slate-800
-">
+"
+                  >
+                    {item.value}
+                  </h2>
+                </div>
 
-{item.value}
-
-</h2>
-
-
-</div>
-
-
-
-<div
-className={`
+                <div
+                  className={`
 w-16
 h-16
 rounded-2xl
@@ -235,58 +175,29 @@ justify-center
 text-3xl
 ${item.bg}
 `}
->
+                >
+                  {item.icon}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-{item.icon}
+      {/* MAIN */}
 
-</div>
-
-
-</div>
-
-
-</div>
-
-
-))
-
-}
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-{/* MAIN */}
-
-
-
-<section
-className="
+      <section
+        className="
 grid
 grid-cols-1
 xl:grid-cols-3
 gap-8
 "
->
+      >
+        {/* Progress */}
 
-
-
-
-{/* Progress */}
-
-
-<div
-className="
+        <div
+          className="
 xl:col-span-2
 bg-white
 rounded-3xl
@@ -294,30 +205,26 @@ border
 p-8
 shadow-sm
 "
->
-
-
-<div className="
+        >
+          <div
+            className="
 flex
 justify-between
 items-center
 mb-8
-">
-
-
-<h2 className="
+"
+          >
+            <h2
+              className="
 text-2xl
 font-bold
-">
+"
+            >
+              Payroll Progress
+            </h2>
 
-Payroll Progress
-
-</h2>
-
-
-
-<span
-className="
+            <span
+              className="
 bg-green-100
 text-green-700
 px-4
@@ -325,147 +232,84 @@ py-2
 rounded-full
 text-sm
 "
->
+            >
+              Active
+            </span>
+          </div>
 
-Active
-
-</span>
-
-
-</div>
-
-
-
-
-
-{
-progress.map(item=>(
-
-
-<div
-key={item[0]}
-className="mb-8"
->
-
-
-<div className="
+          {progress.map((item) => (
+            <div key={item[0]} className="mb-8">
+              <div
+                className="
 flex
 justify-between
 mb-3
 text-sm
 "
->
+              >
+                <span className="font-medium">{item[0]}</span>
 
+                <span>{item[1]}%</span>
+              </div>
 
-<span className="font-medium">
-
-{item[0]}
-
-</span>
-
-
-<span>
-
-{item[1]}%
-
-</span>
-
-
-</div>
-
-
-
-<div className="
+              <div
+                className="
 h-3
 rounded-full
 bg-slate-100
 overflow-hidden
-">
-
-
-<div
-
-className="
+"
+              >
+                <div
+                  className="
 h-full
 rounded-full
 bg-linear-to-r
 from-indigo-500
 to-purple-600
 "
+                  style={{
+                    width: `${item[1]}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
 
-style={{
-width:`${item[1]}%`
-}}
+        {/* Activity */}
 
-/>
-
-
-</div>
-
-
-</div>
-
-
-))
-
-
-}
-
-
-</div>
-
-
-
-
-
-
-
-{/* Activity */}
-
-
-
-<div
-className="
+        <div
+          className="
 bg-white
 rounded-3xl
 border
 p-8
 shadow-sm
 "
->
-
-
-<h2 className="
+        >
+          <h2
+            className="
 text-2xl
 font-bold
 mb-8
-">
+"
+          >
+            Recent Activity
+          </h2>
 
-Recent Activity
-
-</h2>
-
-
-
-<div className="space-y-7">
-
-
-{
-activity.map(item=>(
-
-
-<div
-key={item[1]}
-className="
+          <div className="space-y-7">
+            {activity.map((item) => (
+              <div
+                key={item[1]}
+                className="
 flex
 gap-5
 items-start
 "
->
-
-
-<div
-className="
+              >
+                <div
+                  className="
 w-12
 h-12
 rounded-2xl
@@ -476,106 +320,64 @@ justify-center
 text-xl
 shrink-0
 "
->
+                >
+                  {item[0]}
+                </div>
 
-{item[0]}
-
-</div>
-
-
-
-<div>
-
-
-<h3 className="
+                <div>
+                  <h3
+                    className="
 font-semibold
-">
+"
+                  >
+                    {item[1]}
+                  </h3>
 
-{item[1]}
-
-</h3>
-
-
-<p className="
+                  <p
+                    className="
 text-sm
 text-slate-500
 mt-1
-">
+"
+                  >
+                    {item[2]}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-{item[2]}
+      {/* QUICK MANAGEMENT */}
 
-</p>
-
-
-</div>
-
-
-</div>
-
-
-))
-
-}
-
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-{/* QUICK MANAGEMENT */}
-
-
-
-<section>
-
-
-<h2 className="
+      <section>
+        <h2
+          className="
 text-2xl
 font-bold
 mb-6
-">
+"
+        >
+          Quick Management
+        </h2>
 
-Quick Management
-
-</h2>
-
-
-
-<div className="
+        <div
+          className="
 grid
 grid-cols-1
 md:grid-cols-3
 gap-6
-">
-
-
-{
-
-[
-["🌍","Countries","Manage payroll locations"],
-["💰","Allowances","Configure benefits"],
-["📉","Deductions","Manage compliance"]
-]
-
-.map(item=>(
-
-
-<div
-key={item[1]}
-className="
+"
+        >
+          {[
+            ["🌍", "Countries", "Manage payroll locations"],
+            ["💰", "Allowances", "Configure benefits"],
+            ["📉", "Deductions", "Manage compliance"],
+          ].map((item) => (
+            <div
+              key={item[1]}
+              className="
 bg-white
 rounded-3xl
 border
@@ -584,76 +386,41 @@ shadow-sm
 hover:shadow-lg
 transition
 "
->
+            >
+              <div className="text-4xl mb-5">{item[0]}</div>
 
-
-<div className="text-4xl mb-5">
-
-{item[0]}
-
-</div>
-
-
-<h3 className="
+              <h3
+                className="
 text-xl
 font-bold
-">
+"
+              >
+                {item[1]}
+              </h3>
 
-{item[1]}
-
-</h3>
-
-
-
-<p className="
+              <p
+                className="
 text-slate-500
 mt-3
 leading-relaxed
-">
+"
+              >
+                {item[2]}
+              </p>
 
-{item[2]}
-
-</p>
-
-
-
-<button
-className="
+              <button
+                className="
 mt-6
 text-indigo-600
 font-semibold
 "
->
-
-Manage →
-
-</button>
-
-
-
-</div>
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-</div>
-
-
-)
-
+              >
+                Manage →
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }

@@ -5,9 +5,9 @@
 
 /* Global Reset */
 
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -26,7 +26,6 @@ body,
 
 
 body {
-
   font-family:
     "Inter",
     ui-sans-serif,
@@ -36,12 +35,9 @@ body {
     "Segoe UI",
     sans-serif;
 
-
   background: #f8fafc;
-
   color: #1e293b;
-
-
+  overflow-x: hidden;
 }
 
 
@@ -49,9 +45,7 @@ body {
 /* Prevent layout overflow */
 
 #root {
-
-  min-height:100vh;
-
+  min-height: 100vh;
 }
 
 

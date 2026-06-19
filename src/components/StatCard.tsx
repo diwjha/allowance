@@ -4,11 +4,7 @@ type StatCardProps = {
   icon: string;
 };
 
-export default function StatCard({
-  title,
-  value,
-  icon,
-}: StatCardProps) {
+export default function StatCard({ title, value, icon }: StatCardProps) {
   return (
     <div
       className="
@@ -25,7 +21,6 @@ export default function StatCard({
       overflow-hidden
       "
     >
-
       <div
         className="
         flex
@@ -34,8 +29,6 @@ export default function StatCard({
         gap-4
         "
       >
-
-
         {/* Text Section */}
 
         <div
@@ -44,7 +37,6 @@ export default function StatCard({
           flex-1
           "
         >
-
           <p
             className="
             text-slate-500
@@ -57,7 +49,6 @@ export default function StatCard({
             {title}
           </p>
 
-
           <h2
             className="
             text-3xl
@@ -69,12 +60,7 @@ export default function StatCard({
           >
             {value}
           </h2>
-
-
         </div>
-
-
-
 
         {/* Icon */}
 
@@ -94,15 +80,9 @@ export default function StatCard({
           text-2xl
           "
         >
-
           {icon}
-
         </div>
-
-
       </div>
-
-
     </div>
   );
 }
