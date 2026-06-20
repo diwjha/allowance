@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 @import "tailwindcss";
-
 
 /* Global Reset */
 
@@ -11,19 +10,13 @@
   box-sizing: border-box;
 }
 
-
-
 html,
 body,
 #root {
-
   width: 100%;
 
   min-height: 100%;
-
 }
-
-
 
 body {
   font-family:
@@ -40,27 +33,18 @@ body {
   overflow-x: hidden;
 }
 
-
-
 /* Prevent layout overflow */
 
 #root {
   min-height: 100vh;
 }
 
-
-
 button,
 input,
 select,
 textarea {
-
   font-family: inherit;
-
 }
-
-
-
 
 /* Text handling */
 
@@ -69,77 +53,45 @@ h2,
 h3,
 p,
 span {
-
   overflow-wrap: break-word;
-
 }
-
-
-
 
 /* Scrollbar */
 
 ::-webkit-scrollbar {
-
-  width:8px;
-
+  width: 8px;
 }
-
 
 ::-webkit-scrollbar-track {
-
-  background:#f1f5f9;
-
+  background: #f1f5f9;
 }
-
 
 ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
 
-  background:#cbd5e1;
-
-  border-radius:10px;
-
+  border-radius: 10px;
 }
-
 
 ::-webkit-scrollbar-thumb:hover {
-
-  background:#94a3b8;
-
+  background: #94a3b8;
 }
-
-
-
 
 /* Page animation */
 
 main {
-
-  animation: pageFade .25s ease-in-out;
-
+  animation: pageFade 0.25s ease-in-out;
 }
-
-
 
 @keyframes pageFade {
+  from {
+    opacity: 0;
 
+    transform: translateY(8px);
+  }
 
-from {
+  to {
+    opacity: 1;
 
-  opacity:0;
-
-  transform:translateY(8px);
-
-}
-
-
-to {
-
-  opacity:1;
-
-  transform:translateY(0);
-
-}
-
-
+    transform: translateY(0);
+  }
 }
