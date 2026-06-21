@@ -1,204 +1,141 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "../components/Modal";
 import Toggle from "../components/Toggle";
 import { DeductionMaster } from "../types/master";
+import {
+  fetchDeductions,
+  createDeduction,
+  updateDeduction,
+  deleteDeduction as deleteDeductionApi,
+} from "../services/deductionService";
 
 const defaultForm: DeductionMaster = {
-  id: 0,
-  name: "",
-  code: "",
-  countryCode: "IN",
-  valueType: "PERCENTAGE",
-  defaultValue: 0,
-  minValue: 0,
-  maxValue: 0,
-  mandatory: true,
-  active: true,
+  id: "0",
+  deductionName: "",
+  deductionCode: "",
+  deductionCountryCode: "IN",
+  deductionValueType: "PERCENTAGE",
+  deductionDefaultValue: 0,
+  deductionMinValue: 0,
+  deductionMaxValue: 0,
+  taxableStatus: true,
+  deductionStatus: true,
 };
 
 export default function DeductionMasterPage() {
+  const [showModal, setShowModal] = useState(false);
 
-  const [showModal,setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-  const [editingId,setEditingId] =
-    useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
-  const [search,setSearch] = useState("");
+  const [countryFilter, setCountryFilter] = useState("ALL");
 
-  const [countryFilter,setCountryFilter] =
-    useState("ALL");
+  const [deductions, setDeductions] = useState<DeductionMaster[]>([]);
 
+  const [loading, setLoading] = useState(false);
 
-  const [deductions,setDeductions] =
-  useState<DeductionMaster[]>([
-    {
-      id:1,
-      name:"Provident Fund",
-      code:"PF",
-      countryCode:"IN",
-      valueType:"PERCENTAGE",
-      defaultValue:12,
-      minValue:0,
-      maxValue:12,
-      mandatory:true,
-      active:true
-    },
-    {
-      id:2,
-      name:"Professional Tax",
-      code:"PT",
-      countryCode:"IN",
-      valueType:"FIXED_AMOUNT",
-      defaultValue:200,
-      minValue:0,
-      maxValue:500,
-      mandatory:true,
-      active:true
-    },
-    {
-      id:3,
-      name:"Social Security",
-      code:"SS",
-      countryCode:"US",
-      valueType:"PERCENTAGE",
-      defaultValue:6,
-      minValue:0,
-      maxValue:10,
-      mandatory:true,
-      active:true
-    }
-  ]);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch deductions from API on component mount
+  useEffect(() => {
+    const loadDeductions = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await fetchDeductions();
+        setDeductions(data);
+      } catch (err) {
+        setError("Failed to load deductions");
+        console.error("Error fetching deductions:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const [form,setForm] =
-    useState<DeductionMaster>(defaultForm);
+    loadDeductions();
+  }, []);
 
+  const [form, setForm] = useState<DeductionMaster>(defaultForm);
 
-
-  const filteredData = useMemo(()=>{
-
-    return deductions.filter(item=>{
-
+  const filteredData = useMemo(() => {
+    return deductions.filter((item) => {
       const searchMatch =
-      item.name.toLowerCase()
-      .includes(search.toLowerCase()) ||
-
-      item.code.toLowerCase()
-      .includes(search.toLowerCase());
-
+        item.deductionName.toLowerCase().includes(search.toLowerCase()) ||
+        item.deductionCode.toLowerCase().includes(search.toLowerCase());
 
       const countryMatch =
-      countryFilter==="ALL"
-      ? true
-      : item.countryCode===countryFilter;
-
+        countryFilter === "ALL" || item.deductionCountryCode === countryFilter;
 
       return searchMatch && countryMatch;
-
     });
-
-
-  },[
-    deductions,
-    search,
-    countryFilter
-  ]);
+  }, [deductions, search, countryFilter]);
 
 
 
-  const resetForm=()=>{
-    setForm(defaultForm);
+  const resetForm = () => {
+    setForm({ ...defaultForm });
     setEditingId(null);
   };
 
-
-  const openCreateModal=()=>{
+  const openCreateModal = () => {
     resetForm();
     setShowModal(true);
   };
 
-
-  const openEditModal=(item:DeductionMaster)=>{
-    setForm({...item});
+  const openEditModal = (item: DeductionMaster) => {
+    setForm(item);
     setEditingId(item.id);
     setShowModal(true);
   };
 
-
-
-  const saveDeduction=()=>{
-
-    if(
-      !form.name.trim() ||
-      !form.code.trim()
-    ){
-      alert("Name and Code are required");
+  const saveDeduction = async () => {
+    if (!form.deductionName.trim() || !form.deductionCode.trim()) {
+      alert("Name and Code required");
       return;
     }
 
+    try {
+      if (editingId !== null) {
+        // Update existing deduction
+        await updateDeduction(editingId, form);
+        setDeductions((prev) =>
+          prev.map((item) =>
+            item.id === editingId ? { ...form, id: editingId } : item,
+          ),
+        );
+      } else {
+        // Create new deduction
+        const newDeduction = await createDeduction(form);
+        setDeductions((prev) => [...prev, newDeduction]);
+      }
 
-
-    if(editingId!==null){
-
-      setDeductions(prev=>
-        prev.map(item=>
-          item.id===editingId
-          ? form
-          : item
-        )
-      );
-
+      setShowModal(false);
+      resetForm();
+    } catch (err) {
+      console.error("Error saving deduction:", err);
+      alert("Failed to save deduction");
     }
-    else{
-
-      setDeductions(prev=>[
-        ...prev,
-        {
-          ...form,
-          id:Date.now()
-        }
-      ]);
-
-    }
-
-
-    setShowModal(false);
-    resetForm();
-
   };
 
-
-
-
-  const deleteDeduction=(id:number)=>{
-
-    if(
-      !window.confirm(
-        "Delete this deduction?"
-      )
-    )
-    return;
-
-
-    setDeductions(prev=>
-      prev.filter(item=>item.id!==id)
-    );
-
+  const deleteDeduction = async (id: string) => {
+    if (window.confirm("Delete Deduction?")) {
+      try {
+        await deleteDeductionApi(id);
+        setDeductions((prev) => prev.filter((item) => item.id !== id));
+      } catch (err) {
+        console.error("Error deleting deduction:", err);
+        alert("Failed to delete deduction");
+      }
+    }
   };
 
+  return (
+    <div className="space-y-8">
+      {/* HEADER */}
 
-
-
-
-return (
-
-<div className="space-y-8">
-
-
-{/* PAGE HEADER */}
-
-<div
-className="
+      <div
+        className="
 bg-linear-to-r
 from-indigo-600
 via-purple-600
@@ -212,26 +149,26 @@ justify-between
 items-center
 flex-wrap
 gap-5
-">
+"
+      >
+        <div>
+          <h1 className="text-4xl font-bold">Deduction Master</h1>
 
-<div>
+          <p
+            className="
+text-indigo-100
+mt-2
+"
+          >
+            Manage payroll deduction configuration globally
+          </p>
+        </div>
 
-<h1 className="text-4xl font-bold">
-Deduction Master
-</h1>
-
-<p className="mt-2 text-indigo-100">
-Configure payroll deductions globally
-</p>
-
-</div>
-
-
-<button
-onClick={openCreateModal}
-className="
+        <button
+          onClick={openCreateModal}
+          className="
 bg-white
-text-indigo-700
+text-indigo-600
 px-6
 py-3
 rounded-xl
@@ -239,14 +176,11 @@ font-semibold
 shadow
 hover:scale-105
 transition
-">
-
-+ Add Deduction
-
-</button>
-
-
-</div>
+"
+        >
+          + Add Deduction
+        </button>
+      </div>
 
 
 
@@ -298,7 +232,7 @@ Active Deductions
 
 {
 deductions.filter(
-d=>d.active
+d=>d.deductionStatus
 ).length
 }
 
@@ -323,7 +257,7 @@ border
 Mandatory
 </p>
 
-
+{/* 
 <h2 className="text-4xl font-bold text-orange-500 mt-2">
 
 {
@@ -332,7 +266,7 @@ d=>d.mandatory
 ).length
 }
 
-</h2>
+</h2> */}
 
 
 </div>
@@ -515,7 +449,7 @@ transition
 
 
 <td className="p-5 font-semibold">
-{item.name}
+{item.deductionName}
 </td>
 
 
@@ -531,7 +465,7 @@ text-indigo-700
 "
 >
 
-{item.code}
+{item.deductionCode}
 
 </span>
 
@@ -539,22 +473,22 @@ text-indigo-700
 
 
 <td className="p-5">
-{item.countryCode}
+{item.deductionCountryCode}
 </td>
 
 
 <td className="p-5">
-{item.valueType}
+{item.deductionValueType}
 </td>
 
 
 <td className="p-5 font-semibold">
-{item.defaultValue}
+{item.deductionDefaultValue}
 </td>
 
 
 
-<td className="p-5">
+{/* <td className="p-5">
 <Toggle
 checked={item.mandatory}
 onChange={()=>
@@ -573,7 +507,7 @@ mandatory:!d.mandatory
 
 }
 />
-</td>
+</td> */}
 
 
 
@@ -582,7 +516,7 @@ mandatory:!d.mandatory
 
 <Toggle
 
-checked={item.active}
+checked={item.deductionStatus}
 
 onChange={()=>
 
@@ -596,7 +530,7 @@ d.id===item.id
 
 {
 ...d,
-active:!d.active
+deductionStatus:!d.deductionStatus
 }
 
 :d
@@ -759,7 +693,7 @@ e.target.value
 
 <select
 
-value={form.countryCode}
+value={form.deductionCountryCode}
 
 className="border rounded-xl p-3"
 
@@ -767,7 +701,7 @@ onChange={e=>
 
 setForm({
 ...form,
-countryCode:e.target.value
+deductionCountryCode:e.target.value
 })
 
 }
@@ -791,7 +725,7 @@ USA
 
 <select
 
-value={form.valueType}
+value={form.deductionValueType}
 
 className="border rounded-xl p-3"
 
@@ -801,8 +735,8 @@ setForm({
 
 ...form,
 
-valueType:
-e.target.value as DeductionMaster["valueType"]
+deductionValueType:
+e.target.value as DeductionMaster["deductionValueType"]
 
 })
 
@@ -871,44 +805,19 @@ Number(e.target.value)
 
 
 
-
-
-<div className="flex justify-between items-center border rounded-xl p-4">
-
-Mandatory
-
-<Toggle
-
-checked={form.mandatory}
-
-onChange={()=>
-
-setForm({
-...form,
-mandatory:!form.mandatory
-})
-
-}
-
-/>
-
-</div>
-
-
-
 <div className="flex justify-between items-center border rounded-xl p-4">
 
 Active
 
 <Toggle
 
-checked={form.active}
+checked={form.deductionStatus}
 
 onChange={()=>
 
 setForm({
 ...form,
-active:!form.active
+deductionStatus:!form.deductionStatus
 })
 
 }

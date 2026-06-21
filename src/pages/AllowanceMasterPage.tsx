@@ -1,25 +1,31 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Modal from "../components/Modal";
 import Toggle from "../components/Toggle";
 import { AllowanceMaster } from "../types/master";
+import {
+  fetchAllowances,
+  createAllowance,
+  updateAllowance,
+  deleteAllowance as deleteAllowanceApi,
+} from "../services/allowanceService";
 
 const defaultForm: AllowanceMaster = {
-  id: 0,
-  name: "",
-  code: "",
-  countryCode: "IN",
-  valueType: "PERCENTAGE",
-  defaultValue: 0,
-  minValue: 0,
-  maxValue: 0,
-  taxable: true,
-  active: true,
+  id: "",
+  allowanceName: "",
+  allowanceCode: "",
+  allowanceCountryCode: "IN",
+  allowanceValueType: "PERCENTAGE",
+  allowanceDefaultValue: 0,
+  allowanceMinValue: 0,
+  allowanceMaxValue: 0,
+  taxableStatus: true,
+  allowanceStatus: true,
 };
 
 export default function AllowanceMasterPage() {
   const [showModal, setShowModal] = useState(false);
 
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const [search, setSearch] = useState("");
 
@@ -27,47 +33,47 @@ export default function AllowanceMasterPage() {
 
   const [statusFilter, setStatusFilter] = useState("ALL");
 
-  const [allowances, setAllowances] = useState<AllowanceMaster[]>([
-    {
-      id: 1,
-      name: "House Rent Allowance",
-      code: "HRA",
-      countryCode: "IN",
-      valueType: "PERCENTAGE",
-      defaultValue: 40,
-      minValue: 0,
-      maxValue: 50,
-      taxable: true,
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Transport Allowance",
-      code: "TA",
-      countryCode: "IN",
-      valueType: "FIXED_AMOUNT",
-      defaultValue: 5000,
-      minValue: 0,
-      maxValue: 10000,
-      taxable: false,
-      active: true,
-    },
-  ]);
+  const [allowances, setAllowances] = useState<AllowanceMaster[]>([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch allowances from API on component mount
+  useEffect(() => {
+    const loadAllowances = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await fetchAllowances();
+        setAllowances(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setError("Failed to load allowances");
+        console.error("Error fetching allowances:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAllowances();
+  }, []);
 
   const [form, setForm] = useState<AllowanceMaster>(defaultForm);
 
   const filteredData = useMemo(() => {
-    return allowances.filter((item) => {
+    const allowanceList = Array.isArray(allowances) ? allowances : [];
+
+    return allowanceList.filter((item) => {
       const searchMatch =
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.code.toLowerCase().includes(search.toLowerCase());
+        item.allowanceName.toLowerCase().includes(search.toLowerCase()) ||
+        item.allowanceCode.toLowerCase().includes(search.toLowerCase());
 
       const countryMatch =
-        countryFilter === "ALL" || item.countryCode === countryFilter;
+        countryFilter === "ALL" || item.allowanceCountryCode === countryFilter;
 
       const statusMatch =
         statusFilter === "ALL" ||
-        (statusFilter === "ACTIVE" ? item.active : !item.active);
+        (statusFilter === "ACTIVE" ? item.allowanceStatus : !item.allowanceStatus);
 
       return searchMatch && countryMatch && statusMatch;
     });
@@ -89,37 +95,44 @@ export default function AllowanceMasterPage() {
     setShowModal(true);
   };
 
-  const saveAllowance = () => {
-    if (!form.name.trim() || !form.code.trim()) {
+  const saveAllowance = async () => {
+    if (!form.allowanceName.trim() || !form.allowanceCode.trim()) {
       alert("Name and Code required");
-
       return;
     }
 
-    if (editingId !== null) {
-      setAllowances((prev) =>
-        prev.map((item) =>
-          item.id === editingId ? { ...form, id: editingId } : item,
-        ),
-      );
-    } else {
-      setAllowances((prev) => [
-        ...prev,
-        {
-          ...form,
-          id: Date.now(),
-        },
-      ]);
+    try {
+      if (editingId !== null) {
+        // Update existing allowance
+        await updateAllowance(editingId, form);
+        setAllowances((prev) =>
+          prev.map((item) =>
+            item.id === editingId ? { ...form, id: editingId } : item,
+          ),
+        );
+      } else {
+        // Create new allowance
+        const newAllowance = await createAllowance(form);
+        setAllowances((prev) => [...prev, newAllowance]);
+      }
+
+      setShowModal(false);
+      resetForm();
+    } catch (err) {
+      console.error("Error saving allowance:", err);
+      alert("Failed to save allowance");
     }
-
-    setShowModal(false);
-
-    resetForm();
   };
 
-  const deleteAllowance = (id: number) => {
+  const deleteAllowance = async (id: string) => {
     if (window.confirm("Delete Allowance?")) {
-      setAllowances((prev) => prev.filter((item) => item.id !== id));
+      try {
+        await deleteAllowanceApi(id);
+        setAllowances((prev) => prev.filter((item) => item.id !== id));
+      } catch (err) {
+        console.error("Error deleting allowance:", err);
+        alert("Failed to delete allowance");
+      }
     }
   };
 
@@ -242,15 +255,26 @@ p-3
 
       {/* TABLE */}
 
-      <div
-        className="
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
+
+      {loading ? (
+        <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+          <p className="text-gray-500">Loading allowances...</p>
+        </div>
+      ) : (
+        <div
+          className="
 bg-white
 rounded-3xl
 shadow-xl
 overflow-x-auto
 "
-      >
-        <table className="w-full">
+        >
+          <table className="w-full">
           <thead
             className="
 bg-linear-to-r
@@ -293,7 +317,7 @@ hover:bg-slate-50
 transition
 "
               >
-                <td className="p-5 font-medium">{item.name}</td>
+                <td className="p-5 font-medium">{item.allowanceName}</td>
 
                 <td className="p-5">
                   <span
@@ -306,26 +330,26 @@ rounded-full
 text-sm
 "
                   >
-                    {item.code}
+                    {item.allowanceCode}
                   </span>
                 </td>
 
-                <td className="p-5">{item.countryCode}</td>
+                <td className="p-5">{item.allowanceCountryCode}</td>
 
-                <td className="p-5">{item.valueType}</td>
+                <td className="p-5">{item.allowanceValueType}</td>
 
-                <td className="p-5 font-semibold">{item.defaultValue}</td>
+                <td className="p-5 font-semibold">{item.allowanceDefaultValue}</td>
 
                 <td className="p-5">
                   <Toggle
-                    checked={item.taxable}
+                    checked={item.taxableStatus}
                     onChange={() => {
                       setAllowances((prev) =>
                         prev.map((a) =>
                           a.id === item.id
                             ? {
                                 ...a,
-                                taxable: !a.taxable,
+                                taxableStatus: !a.taxableStatus,
                               }
                             : a,
                         ),
@@ -343,11 +367,11 @@ py-1
 rounded-full
 text-sm
 
-${item.active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}
+${item.allowanceStatus ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}
 
 `}
                   >
-                    {item.active ? "Active" : "Inactive"}
+                    {item.allowanceStatus ? "Active" : "Inactive"}
                   </span>
                 </td>
 
@@ -384,7 +408,8 @@ hover:bg-red-600
             ))}
           </tbody>
         </table>
-      </div>
+        </div>
+      )}
 
       {/* MODAL */}
 
@@ -397,7 +422,7 @@ hover:bg-red-600
         }}
       >
         <div className="grid gap-4 md:grid-cols-2">
-          {["name", "code", "defaultValue", "minValue", "maxValue"].map(
+          {["allowanceName", "allowanceCode", "allowanceDefaultValue", "allowanceMinValue", "allowanceMaxValue"].map(
             (field) => (
               <input
                 key={field}
@@ -428,12 +453,12 @@ border
 rounded-xl
 p-3
 "
-            value={form.valueType}
+            value={form.allowanceValueType}
             onChange={(e) =>
               setForm({
                 ...form,
 
-                valueType: e.target.value as any,
+                allowanceValueType: e.target.value as any,
               })
             }
           >

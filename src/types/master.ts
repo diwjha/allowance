@@ -22,46 +22,45 @@ export interface CountryForm extends Country {
 }
 
 export interface AllowanceMaster {
-  id: number;
+  id: string;
 
-  name: string;
-  code: string;
+  allowanceName: string;
+  allowanceCode: string;
 
-  countryCode: string;
+  allowanceCountryCode: string;
 
-  valueType: ComponentValueType;
+  allowanceValueType: ComponentValueType;
 
-  defaultValue: number;
+  allowanceDefaultValue: number;
 
-  minValue: number;
-  maxValue: number;
+  allowanceMinValue: number;
+  allowanceMaxValue: number;
 
-  taxable: boolean;
+  taxableStatus: boolean;
 
-  active: boolean;
+  allowanceStatus: boolean;
 
   createdAt?: string;
   updatedAt?: string;
 }
 
 export interface DeductionMaster {
-  id: number;
+  id: string;
 
-  name: string;
-  code: string;
+  deductionName: string;
+  deductionCode: string;
 
-  countryCode: string;
+  deductionCountryCode: string;
 
-  valueType: ComponentValueType;
+  deductionValueType: ComponentValueType;
 
-  defaultValue: number;
+  deductionDefaultValue: number;
 
-  minValue: number;
-  maxValue: number;
+  deductionMinValue: number;
+  deductionMaxValue: number;
 
-  mandatory: boolean;
-
-  active: boolean;
+  taxableStatus: boolean;
+  deductionStatus: boolean;
 
   createdAt?: string;
   updatedAt?: string;
