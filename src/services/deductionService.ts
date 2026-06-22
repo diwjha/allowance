@@ -4,7 +4,7 @@ import { DeductionMaster } from "../types/master";
 const API_URL = import.meta.env.VITE_API_URL ?? "";
 
 export const fetchDeductions = async (): Promise<DeductionMaster[]> => {
-  const response = await axios.get(`${API_URL}/api/deductions/deduction`);
+  const response = await axios.get(`${API_URL}/deductions/deduction`);
   const data = response.data;
   
   // Handle different response formats
@@ -26,7 +26,7 @@ export const fetchDeductions = async (): Promise<DeductionMaster[]> => {
 export const createDeduction = async (
   payload: DeductionMaster
 ): Promise<DeductionMaster> => {
-  const response = await axios.post(`${API_URL}/api/deductions/deduction`, payload);
+  const response = await axios.post(`${API_URL}/deductions/deduction`, payload);
   return response.data;
 };
 
@@ -35,12 +35,12 @@ export const updateDeduction = async (
   payload: DeductionMaster
 ): Promise<DeductionMaster> => {
   const response = await axios.put(
-    `${API_URL}/api/deductions/deduction/${id}`,
+    `${API_URL}/deductions/deduction/${id}`,
     payload
   );
   return response.data;
 };
 
 export const deleteDeduction = async (id: string): Promise<void> => {
-  await axios.delete(`${API_URL}/api/deductions/deduction/${id}`);
+  await axios.delete(`${API_URL}/deductions/deduction/${id}`);
 };
