@@ -22,11 +22,11 @@ const menuItems: {
   value: "employee-master",
   icon: "👨‍💼"
 },
-  {
-    label: "Countries",
-    value: "country-master",
-    icon: "🌍",
-  },
+  // {
+  //   label: "Countries",
+  //   value: "country-master",
+  //   icon: "🌍",
+  // },
   {
     label: "Allowances",
     value: "allowance-master",
@@ -47,11 +47,11 @@ const menuItems: {
     value: "payroll",
     icon: "💵",
   },
-  {
-    label: "Reports",
-    value: "deductions",
-    icon: "📈",
-  },
+  // {
+  //   label: "Reports",
+  //   value: "deductions",
+  //   icon: "📈",
+  // },
 ];
 
 export default function Sidebar({ activePage, setActivePage }: SidebarProps) {
