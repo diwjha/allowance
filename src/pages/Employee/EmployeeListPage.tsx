@@ -1,55 +1,157 @@
-import { useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import EmployeeWizardPage from "./EmployeeWizardPage";
+
+import {
+  getEmployees,
+  deleteEmployee,
+} from "../../services/employeeService";
+
+interface Employee {
+  employeeCode: string;
+  firstName: string;
+  lastName: string;
+  position: string;
+  departmentName: string;
+  ministryName: string;
+  mobileNumber: string;
+  dateOfJoining: string;
+  employmentType: string;
+}
 
 export default function EmployeeListPage() {
   const [search, setSearch] = useState("");
-  const [showWizard, setShowWizard] = useState(false);
 
-  const employees = [
-    {
-      id: 1,
-      employeeId: "EMP001",
-      name: "Rahul Sharma",
-      designation: "Software Engineer",
-      department: "IT",
-      joiningDate: "2024-01-15",
-      status: "ACTIVE",
-    },
-    {
-      id: 2,
-      employeeId: "EMP002",
-      name: "Amit Kumar",
-      designation: "HR Manager",
-      department: "HR",
-      joiningDate: "2023-09-10",
-      status: "ON_LEAVE",
-    },
-  ];
+  const [showWizard, setShowWizard] =
+    useState(false);
 
-  const filteredEmployees = useMemo(() => {
-    return employees.filter(
-      (emp) =>
-        emp.employeeId
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        emp.name
-          .toLowerCase()
-          .includes(search.toLowerCase()) ||
-        emp.designation
-          .toLowerCase()
-          .includes(search.toLowerCase())
-    );
-  }, [search]);
+  const [employees, setEmployees] =
+    useState<Employee[]>([]);
 
-  // ============================
+  const [loading, setLoading] =
+    useState(false);
+
+  // ===========================
+  // LOAD EMPLOYEES
+  // ===========================
+
+  const loadEmployees = async () => {
+    try {
+      setLoading(true);
+
+      const response =
+        await getEmployees();
+
+      console.log(
+        "Employee API Response",
+        response
+      );
+
+      setEmployees(
+        response.content || []
+      );
+    } catch (error) {
+      console.error(
+        "Failed to load employees",
+        error
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadEmployees();
+  }, []);
+
+  // ===========================
+  // DELETE EMPLOYEE
+  // ===========================
+
+  const handleDelete = async (
+    employeeCode: string
+  ) => {
+    const confirmDelete =
+      window.confirm(
+        "Delete this employee?"
+      );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteEmployee(
+        employeeCode
+      );
+
+      await loadEmployees();
+
+      alert(
+        "Employee deleted successfully"
+      );
+    } catch (error) {
+      console.error(error);
+
+      alert("Delete failed");
+    }
+  };
+
+  // ===========================
+  // SEARCH FILTER
+  // ===========================
+
+  const filteredEmployees =
+    useMemo(() => {
+      return employees.filter(
+        (emp) => {
+          const fullName =
+            `${emp.firstName} ${emp.lastName}`;
+
+          return (
+            emp.employeeCode
+              ?.toLowerCase()
+              .includes(
+                search.toLowerCase()
+              ) ||
+            fullName
+              .toLowerCase()
+              .includes(
+                search.toLowerCase()
+              ) ||
+            emp.position
+              ?.toLowerCase()
+              .includes(
+                search.toLowerCase()
+              ) ||
+            emp.departmentName
+              ?.toLowerCase()
+              .includes(
+                search.toLowerCase()
+              ) ||
+            emp.ministryName
+              ?.toLowerCase()
+              .includes(
+                search.toLowerCase()
+              )
+          );
+        }
+      );
+    }, [employees, search]);
+
+  // ===========================
   // SHOW WIZARD
-  // ============================
+  // ===========================
 
   if (showWizard) {
     return (
       <div className="space-y-6">
         <button
-          onClick={() => setShowWizard(false)}
+          onClick={() =>
+            setShowWizard(false)
+          }
           className="
           bg-slate-200
           hover:bg-slate-300
@@ -69,7 +171,6 @@ export default function EmployeeListPage() {
 
   return (
     <div className="space-y-8">
-
       {/* HERO */}
 
       <div
@@ -95,13 +196,15 @@ export default function EmployeeListPage() {
           </h1>
 
           <p className="text-indigo-100 mt-2">
-            Manage employee lifecycle, payroll,
-            service records and compliance.
+            Manage employee lifecycle
+            and payroll.
           </p>
         </div>
 
         <button
-          onClick={() => setShowWizard(true)}
+          onClick={() =>
+            setShowWizard(true)
+          }
           className="
           bg-white
           text-indigo-600
@@ -110,8 +213,6 @@ export default function EmployeeListPage() {
           rounded-xl
           font-semibold
           shadow
-          hover:scale-105
-          transition
           "
         >
           + Add Employee
@@ -121,90 +222,98 @@ export default function EmployeeListPage() {
       {/* STATS */}
 
       <div className="grid lg:grid-cols-4 gap-6">
-
         <div className="bg-white rounded-3xl shadow-lg p-6">
           <p className="text-slate-500">
             Total Employees
           </p>
 
           <h2 className="text-4xl font-bold mt-2">
-            250
+            {employees.length}
           </h2>
         </div>
 
         <div className="bg-white rounded-3xl shadow-lg p-6">
           <p className="text-slate-500">
-            Active
+            Permanent
           </p>
 
           <h2 className="text-4xl font-bold text-green-600 mt-2">
-            220
+            {
+              employees.filter(
+                (e) =>
+                  e.employmentType ===
+                  "PERMANENT"
+              ).length
+            }
           </h2>
         </div>
 
         <div className="bg-white rounded-3xl shadow-lg p-6">
           <p className="text-slate-500">
-            On Leave
+            Contract
           </p>
 
           <h2 className="text-4xl font-bold text-yellow-600 mt-2">
-            18
+            {
+              employees.filter(
+                (e) =>
+                  e.employmentType ===
+                  "CONTRACT"
+              ).length
+            }
           </h2>
         </div>
 
         <div className="bg-white rounded-3xl shadow-lg p-6">
           <p className="text-slate-500">
-            Retired
+            Departments
           </p>
 
-          <h2 className="text-4xl font-bold text-red-600 mt-2">
-            12
+          <h2 className="text-4xl font-bold text-indigo-600 mt-2">
+            {
+              new Set(
+                employees.map(
+                  (e) =>
+                    e.departmentName
+                )
+              ).size
+            }
           </h2>
         </div>
-
       </div>
 
       {/* SEARCH */}
 
       <div className="bg-white rounded-3xl shadow-lg p-6">
-
         <input
           type="text"
           placeholder="Search Employee..."
           value={search}
           onChange={(e) =>
-            setSearch(e.target.value)
+            setSearch(
+              e.target.value
+            )
           }
           className="
           w-full
           border
           rounded-xl
           p-3
-          focus:ring-2
-          focus:ring-indigo-400
           outline-none
+          focus:ring-2
+          focus:ring-indigo-500
           "
         />
-
       </div>
 
       {/* TABLE */}
 
-      <div
-        className="
-        bg-white
-        rounded-3xl
-        shadow-xl
-        overflow-x-auto
-        "
-      >
+      <div className="bg-white rounded-3xl shadow-xl overflow-x-auto">
         <table className="w-full">
-
           <thead className="bg-slate-100">
-
             <tr>
               <th className="p-5 text-left">
-                Employee ID
+                Employee Code
               </th>
 
               <th className="p-5 text-left">
@@ -212,7 +321,7 @@ export default function EmployeeListPage() {
               </th>
 
               <th className="p-5 text-left">
-                Designation
+                Position
               </th>
 
               <th className="p-5 text-left">
@@ -220,77 +329,140 @@ export default function EmployeeListPage() {
               </th>
 
               <th className="p-5 text-left">
-                Joining Date
+                Ministry
               </th>
 
               <th className="p-5 text-left">
-                Status
+                Mobile
               </th>
 
               <th className="p-5 text-left">
                 Actions
               </th>
             </tr>
-
           </thead>
 
           <tbody>
-
-            {filteredEmployees.map((emp) => (
-              <tr
-                key={emp.id}
-                className="
-                border-t
-                hover:bg-slate-50
-                "
-              >
-                <td className="p-5">
-                  {emp.employeeId}
-                </td>
-
-                <td className="p-5">
-                  {emp.name}
-                </td>
-
-                <td className="p-5">
-                  {emp.designation}
-                </td>
-
-                <td className="p-5">
-                  {emp.department}
-                </td>
-
-                <td className="p-5">
-                  {emp.joiningDate}
-                </td>
-
-                <td className="p-5">
-                  {emp.status}
-                </td>
-
-                <td className="p-5 flex gap-2">
-
-                  <button className="bg-blue-500 text-white px-3 py-2 rounded-lg">
-                    View
-                  </button>
-
-                  <button className="bg-green-500 text-white px-3 py-2 rounded-lg">
-                    Edit
-                  </button>
-
-                  <button className="bg-red-500 text-white px-3 py-2 rounded-lg">
-                    Delete
-                  </button>
-
+            {loading ? (
+              <tr>
+                <td
+                  colSpan={7}
+                  className="
+                  p-10
+                  text-center
+                  "
+                >
+                  Loading...
                 </td>
               </tr>
-            ))}
+            ) : filteredEmployees.length ===
+              0 ? (
+              <tr>
+                <td
+                  colSpan={7}
+                  className="
+                  p-10
+                  text-center
+                  text-slate-500
+                  "
+                >
+                  No Employees Found
+                </td>
+              </tr>
+            ) : (
+              filteredEmployees.map(
+                (emp) => (
+                  <tr
+                    key={
+                      emp.employeeCode
+                    }
+                    className="
+                    border-t
+                    hover:bg-slate-50
+                    "
+                  >
+                    <td className="p-5">
+                      {
+                        emp.employeeCode
+                      }
+                    </td>
 
+                    <td className="p-5">
+                      {emp.firstName}{" "}
+                      {emp.lastName}
+                    </td>
+
+                    <td className="p-5">
+                      {emp.position}
+                    </td>
+
+                    <td className="p-5">
+                      {
+                        emp.departmentName
+                      }
+                    </td>
+
+                    <td className="p-5">
+                      {
+                        emp.ministryName
+                      }
+                    </td>
+
+                    <td className="p-5">
+                      {
+                        emp.mobileNumber
+                      }
+                    </td>
+
+                    <td className="p-5 flex gap-2">
+                      <button
+                        className="
+                        bg-blue-500
+                        text-white
+                        px-3
+                        py-2
+                        rounded-lg
+                        "
+                      >
+                        View
+                      </button>
+
+                      <button
+                        className="
+                        bg-green-500
+                        text-white
+                        px-3
+                        py-2
+                        rounded-lg
+                        "
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          handleDelete(
+                            emp.employeeCode
+                          )
+                        }
+                        className="
+                        bg-red-500
+                        text-white
+                        px-3
+                        py-2
+                        rounded-lg
+                        "
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
-
         </table>
       </div>
-
     </div>
   );
 }

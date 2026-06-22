@@ -63,7 +63,7 @@ function App() {
 
       <div
         className="
-        ml-[280px]
+        ml-70
         min-h-screen
         flex
         flex-col
@@ -86,7 +86,7 @@ function App() {
           <div
             className="
             w-full
-            max-w-[1600px]
+            max-w-275
             mx-auto
             "
           >
