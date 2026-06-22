@@ -1,3 +1,5 @@
+
+
 // import { EmployeeFormData } from "../EmployeeWizardPage";
 
 // interface Props {
@@ -18,79 +20,115 @@
 //         Address Details
 //       </h2>
 
-//       <div className="grid md:grid-cols-2 gap-4">
+//       <div className="grid md:grid-cols-2 gap-5">
 
-//         <input
-//           placeholder="House Number"
-//           value={formData.houseNo}
-//           onChange={(e) =>
-//             updateField(
-//               "houseNo",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             House Number
+//           </label>
 
-//         <input
-//           placeholder="Street"
-//           value={formData.street}
-//           onChange={(e) =>
-//             updateField(
-//               "street",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//           <input
+//             value={formData.houseNo}
+//             onChange={(e) =>
+//               updateField(
+//                 "houseNo",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="House Number"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
 
-//         <input
-//           placeholder="Area"
-//           value={formData.area}
-//           onChange={(e) =>
-//             updateField(
-//               "area",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             Street
+//           </label>
 
-//         <input
-//           placeholder="Province Of Residence"
-//           value={formData.provinceOfResidence}
-//           onChange={(e) =>
-//             updateField(
-//               "provinceOfResidence",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//           <input
+//             value={formData.street}
+//             onChange={(e) =>
+//               updateField(
+//                 "street",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="Street"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
 
-//         <input
-//           placeholder="Pin Code"
-//           value={formData.pinCode}
-//           onChange={(e) =>
-//             updateField(
-//               "pinCode",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             Area
+//           </label>
 
-//         <input
-//           placeholder="Country"
-//           value={formData.country}
-//           onChange={(e) =>
-//             updateField(
-//               "country",
-//               e.target.value
-//             )
-//           }
-//           className="border rounded-xl p-3"
-//         />
+//           <input
+//             value={formData.area}
+//             onChange={(e) =>
+//               updateField(
+//                 "area",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="Area"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             Province Of Residence
+//           </label>
+
+//           <input
+//             value={formData.provinceOfResidence}
+//             onChange={(e) =>
+//               updateField(
+//                 "provinceOfResidence",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="Province Of Residence"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             Pin Code
+//           </label>
+
+//           <input
+//             value={formData.pinCode}
+//             onChange={(e) =>
+//               updateField(
+//                 "pinCode",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="Pin Code"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="block mb-2 font-medium">
+//             Country
+//           </label>
+
+//           <input
+//             value={formData.country}
+//             onChange={(e) =>
+//               updateField(
+//                 "country",
+//                 e.target.value
+//               )
+//             }
+//             placeholder="Country"
+//             className="border rounded-xl p-3 w-full"
+//           />
+//         </div>
 
 //       </div>
 //     </>
@@ -99,7 +137,16 @@
 
 
 
+
+
+
+
+import { useEffect, useState } from "react";
 import { EmployeeFormData } from "../EmployeeWizardPage";
+import {
+  getCountries,
+  getProvinces,
+} from "../../../services/masterService";
 
 interface Props {
   formData: EmployeeFormData;
@@ -109,20 +156,98 @@ interface Props {
   ) => void;
 }
 
+interface Country {
+  countryKey: string;
+  name: string;
+}
+
+interface Province {
+  provinceKey: string;
+  name: string;
+}
+
 export default function AddressDetailsStep({
   formData,
   updateField,
 }: Props) {
+  const [countries, setCountries] =
+    useState<Country[]>([]);
+
+  const [provinces, setProvinces] =
+    useState<Province[]>([]);
+
+  const [loadingCountries, setLoadingCountries] =
+    useState(false);
+
+  const [loadingProvinces, setLoadingProvinces] =
+    useState(false);
+
+  // ======================
+  // LOAD COUNTRIES
+  // ======================
+
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        setLoadingCountries(true);
+
+        const data = await getCountries();
+
+        setCountries(
+          Array.isArray(data) ? data : []
+        );
+      } catch (error) {
+        console.error(
+          "Failed to load countries",
+          error
+        );
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+
+    loadCountries();
+  }, []);
+
+  // ======================
+  // LOAD PROVINCES
+  // ======================
+
+  useEffect(() => {
+    const loadProvinces = async () => {
+      try {
+        setLoadingProvinces(true);
+
+        const data = await getProvinces();
+
+        setProvinces(
+          Array.isArray(data) ? data : []
+        );
+      } catch (error) {
+        console.error(
+          "Failed to load provinces",
+          error
+        );
+      } finally {
+        setLoadingProvinces(false);
+      }
+    };
+
+    loadProvinces();
+  }, []);
+
   return (
     <>
-      <h2 className="h4 fw-bold mb-4">
+      <h2 className="text-2xl font-bold mb-6">
         Address Details
       </h2>
 
-      <div className="row">
+      <div className="grid md:grid-cols-2 gap-5">
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* HOUSE NUMBER */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             House Number
           </label>
 
@@ -135,12 +260,19 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="House Number"
-            className="form-control form-control-sm"
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
           />
         </div>
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* STREET */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             Street
           </label>
 
@@ -153,12 +285,19 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Street"
-            className="form-control form-control-sm"
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
           />
         </div>
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* AREA */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             Area
           </label>
 
@@ -171,30 +310,64 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Area"
-            className="form-control form-control-sm"
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
           />
         </div>
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* PROVINCE */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             Province Of Residence
           </label>
 
-          <input
-            value={formData.provinceOfResidence}
+          <select
+            value={
+              formData.provinceOfResidence
+            }
             onChange={(e) =>
               updateField(
                 "provinceOfResidence",
                 e.target.value
               )
             }
-            placeholder="Province Of Residence"
-            className="form-control form-control-sm"
-          />
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
+          >
+            <option value="">
+              {loadingProvinces
+                ? "Loading Provinces..."
+                : "Select Province"}
+            </option>
+
+            {provinces.map(
+              (province) => (
+                <option
+                  key={
+                    province.provinceKey
+                  }
+                  value={province.name}
+                >
+                  {province.name}
+                </option>
+              )
+            )}
+          </select>
         </div>
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* PIN CODE */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             Pin Code
           </label>
 
@@ -207,16 +380,23 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Pin Code"
-            className="form-control form-control-sm"
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
           />
         </div>
 
-        <div className="col-md-6 mb-3">
-          <label className="form-label fw-medium">
+        {/* COUNTRY */}
+
+        <div>
+          <label className="block mb-2 font-medium">
             Country
           </label>
 
-          <input
+          <select
             value={formData.country}
             onChange={(e) =>
               updateField(
@@ -224,9 +404,32 @@ export default function AddressDetailsStep({
                 e.target.value
               )
             }
-            placeholder="Country"
-            className="form-control form-control-sm"
-          />
+            className="
+            border
+            rounded-xl
+            p-3
+            w-full
+            "
+          >
+            <option value="">
+              {loadingCountries
+                ? "Loading Countries..."
+                : "Select Country"}
+            </option>
+
+            {countries.map(
+              (country) => (
+                <option
+                  key={
+                    country.countryKey
+                  }
+                  value={country.name}
+                >
+                  {country.name}
+                </option>
+              )
+            )}
+          </select>
         </div>
 
       </div>

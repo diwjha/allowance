@@ -51,7 +51,7 @@ export interface EmployeeFormData {
   provinceOfResidence: string;
   pinCode: string;
   country: string;
-
+bankId: string;
   branchId: string;
 
   accountNumber: string;
@@ -122,7 +122,7 @@ export default function EmployeeWizardPage() {
       provinceOfResidence: "",
       pinCode: "",
       country: "",
-
+bankId: "",
       branchId: "",
 
       accountNumber: "",
