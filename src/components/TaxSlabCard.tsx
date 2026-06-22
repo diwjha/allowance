@@ -20,60 +20,28 @@ export default function TaxSlabCard({
   canDelete,
 }: TaxSlabCardProps) {
   return (
-    <div
-      className="
-        bg-white
-        rounded-3xl
-        shadow-lg
-        border
-        border-slate-200
-        overflow-hidden
-        hover:shadow-xl
-        transition-all
-        duration-300
-      "
-    >
+    <div className="card border mb-4 shadow-sm">
       {/* Header */}
-      <div className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-500 px-6 py-4">
-
-        <h2 className="text-white font-bold text-lg">
-          Tax Slab {index + 1}
-        </h2>
-
-        <p className="text-indigo-100 text-sm">
-          Configure tax range and rate
-        </p>
-
+      <div
+        className="card-header text-white fw-bold"
+        style={{ backgroundColor: "#0d3b66" }}
+      >
+        📊 Tax Slab {index + 1}
       </div>
 
       {/* Content */}
-      <div className="p-6">
-
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5">
-
+      <div className="card-body">
+        <div className="row">
           {/* Tax Rate */}
-          <div>
-            <label className="block mb-2 text-sm font-medium text-slate-700">
-              📊 Tax Rate
+          <div className="col-md-4 mb-3">
+            <label className="form-label small fw-medium">
+              Tax Rate
             </label>
 
-            <div className="flex rounded-xl overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-indigo-400">
-
-              <span
-                className="
-                  bg-slate-100
-                  px-4
-                  flex
-                  items-center
-                  font-semibold
-                  text-slate-600
-                "
-              >
-                %
-              </span>
-
+            <div className="input-group input-group-sm">
               <input
                 type="number"
+                className="form-control"
                 value={slab.rate}
                 onChange={(e) =>
                   updateSlab(
@@ -82,39 +50,22 @@ export default function TaxSlabCard({
                     Number(e.target.value)
                   )
                 }
-                className="
-                  w-full
-                  p-3
-                  outline-none
-                  bg-white
-                "
               />
+              <span className="input-group-text">%</span>
             </div>
           </div>
 
           {/* Start Amount */}
-          <div>
-            <label className="block mb-2 text-sm font-medium text-slate-700">
-              💰 Start Amount
+          <div className="col-md-4 mb-3">
+            <label className="form-label small fw-medium">
+              Start Amount
             </label>
 
-            <div className="flex rounded-xl overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-indigo-400">
-
-              <span
-                className="
-                  bg-slate-100
-                  px-4
-                  flex
-                  items-center
-                  font-semibold
-                  text-slate-600
-                "
-              >
-                ₹
-              </span>
-
+            <div className="input-group input-group-sm">
+              <span className="input-group-text">₹</span>
               <input
                 type="number"
+                className="form-control"
                 value={slab.start}
                 onChange={(e) =>
                   updateSlab(
@@ -123,39 +74,21 @@ export default function TaxSlabCard({
                     Number(e.target.value)
                   )
                 }
-                className="
-                  w-full
-                  p-3
-                  outline-none
-                  bg-white
-                "
               />
             </div>
           </div>
 
           {/* End Amount */}
-          <div>
-            <label className="block mb-2 text-sm font-medium text-slate-700">
-              🏁 End Amount
+          <div className="col-md-4 mb-3">
+            <label className="form-label small fw-medium">
+              End Amount
             </label>
 
-            <div className="flex rounded-xl overflow-hidden border border-slate-300 focus-within:ring-2 focus-within:ring-indigo-400">
-
-              <span
-                className="
-                  bg-slate-100
-                  px-4
-                  flex
-                  items-center
-                  font-semibold
-                  text-slate-600
-                "
-              >
-                ₹
-              </span>
-
+            <div className="input-group input-group-sm">
+              <span className="input-group-text">₹</span>
               <input
                 type="number"
+                className="form-control"
                 value={slab.end}
                 onChange={(e) =>
                   updateSlab(
@@ -164,45 +97,24 @@ export default function TaxSlabCard({
                     Number(e.target.value)
                   )
                 }
-                className="
-                  w-full
-                  p-3
-                  outline-none
-                  bg-white
-                "
               />
             </div>
           </div>
-
         </div>
 
         {/* Delete Button */}
         {canDelete && (
-          <div className="mt-6 flex justify-end">
-
+          <div className="mt-3 text-end">
             <button
               onClick={() =>
                 removeSlab(slab.id)
               }
-              className="
-                px-5
-                py-2.5
-                rounded-xl
-                bg-red-500
-                hover:bg-red-600
-                text-white
-                font-medium
-                transition-all
-                duration-200
-                shadow-md
-              "
+              className="btn btn-danger btn-sm"
             >
-              🗑 Remove Slab
+              🗑 Remove
             </button>
-
           </div>
         )}
-
       </div>
     </div>
   );

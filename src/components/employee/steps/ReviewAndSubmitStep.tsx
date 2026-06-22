@@ -10,11 +10,11 @@ export default function ReviewAndSubmitStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Review Employee Information
-      </h2>
+      </h4>
 
-      <div className="space-y-3">
+      <div className="list-group list-group-flush">
 
         <ReviewRow
           label="Employee Code"
@@ -76,18 +76,13 @@ function ReviewRow({
 }) {
   return (
     <div
-      className="
-      flex
-      justify-between
-      border-b
-      py-3
-      "
+      className="list-group-item d-flex justify-content-between py-2"
     >
-      <span className="font-semibold">
+      <span className="fw-semibold small">
         {label}
       </span>
 
-      <span>{value}</span>
+      <span className="small">{value}</span>
     </div>
   );
 }

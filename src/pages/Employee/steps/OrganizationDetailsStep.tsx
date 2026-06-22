@@ -175,16 +175,16 @@ export default function OrganizationDetailsStep({
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Organization Details
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="row">
 
         {/* MINISTRY */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Ministry
           </label>
 
@@ -196,7 +196,7 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Ministry
@@ -221,8 +221,8 @@ export default function OrganizationDetailsStep({
 
         {/* DEPARTMENT */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Department
           </label>
 
@@ -234,7 +234,7 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Department
@@ -259,8 +259,8 @@ export default function OrganizationDetailsStep({
 
         {/* DIVISION */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Division
           </label>
 
@@ -272,15 +272,15 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
             placeholder="Division"
           />
         </div>
 
         {/* BANK BRANCH */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Bank Branch
           </label>
 
@@ -292,7 +292,7 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Branch

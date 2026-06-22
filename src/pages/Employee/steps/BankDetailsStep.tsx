@@ -54,14 +54,14 @@ export default function BankDetailsStep({
 }: Props) {
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Bank Details
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Account Number
           </label>
 
@@ -75,17 +75,12 @@ export default function BankDetailsStep({
               )
             }
             placeholder="Enter Account Number"
-            className="
-              border
-              rounded-xl
-              p-3
-              w-full
-            "
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Selected Branch
           </label>
 
@@ -94,14 +89,8 @@ export default function BankDetailsStep({
             value={
               formData.branchId || "No Branch Selected"
             }
-            className="
-              border
-              rounded-xl
-              p-3
-              w-full
-              bg-slate-100
-              text-slate-500
-            "
+            className="form-control form-control-sm"
+            style={{backgroundColor: "#f8f9fa"}}
           />
         </div>
 

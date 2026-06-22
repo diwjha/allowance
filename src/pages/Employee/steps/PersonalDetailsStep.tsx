@@ -271,16 +271,16 @@ export default function PersonalDetailsStep({
 }: Props) {
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Personal Details
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="row">
 
         {/* EMPLOYEE CODE */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Employee Code
           </label>
 
@@ -293,14 +293,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="LAO00005"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* TITLE */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Title
           </label>
 
@@ -309,7 +309,7 @@ export default function PersonalDetailsStep({
             onChange={(e) =>
               updateField("title", e.target.value)
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="MR">Mr</option>
             <option value="MS">Ms</option>
@@ -321,8 +321,8 @@ export default function PersonalDetailsStep({
 
         {/* FIRST NAME */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             First Name
           </label>
 
@@ -335,14 +335,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="First Name"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* LAST NAME */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Last Name
           </label>
 
@@ -355,14 +355,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="Last Name"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* GENDER */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Gender
           </label>
 
@@ -374,7 +374,7 @@ export default function PersonalDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="MALE">
               Male
@@ -388,8 +388,8 @@ export default function PersonalDetailsStep({
 
         {/* DOB */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Date Of Birth
           </label>
 
@@ -402,14 +402,14 @@ export default function PersonalDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* EMAIL */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Email
           </label>
 
@@ -423,14 +423,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="Email"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* MOBILE */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Mobile Number
           </label>
 
@@ -443,14 +443,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="Mobile Number"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* SOCIAL SECURITY */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Social Security Number
           </label>
 
@@ -465,14 +465,14 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="Social Security Number"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
         {/* CIVIL SERVICE CARD */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Civil Service Card ID
           </label>
 
@@ -487,7 +487,7 @@ export default function PersonalDetailsStep({
               )
             }
             placeholder="Civil Service Card ID"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
@@ -495,9 +495,9 @@ export default function PersonalDetailsStep({
 
       {/* PHOTO */}
 
-      <div className="mt-8">
+      <div className="mt-4">
 
-        <label className="block mb-3 font-semibold">
+        <label className="form-label fw-bold">
           Employee Photograph
         </label>
 
@@ -510,16 +510,11 @@ export default function PersonalDetailsStep({
               e.target.files?.[0] || null
             )
           }
-          className="
-          border
-          rounded-xl
-          p-3
-          w-full
-          "
+          className="form-control form-control-sm"
         />
 
         {formData.photograph && (
-          <p className="text-green-600 mt-2">
+          <p className="text-success small mt-2">
             Selected:{" "}
             {formData.photograph.name}
           </p>

@@ -124,58 +124,29 @@ export default function PayrollPage() {
 
 
 return (
-
-
-<div className="space-y-8">
-
-
-
-
-
+<div className="mb-5">
 {/* Header */}
-
-
-<div className="flex justify-between items-center flex-wrap gap-4">
+<div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-5">
 
 
 <div>
-
-
-<h1 className="text-3xl font-bold text-slate-800">
-
+<h1 className="h2 fw-bold text-dark mb-2">
 Payroll Configuration
-
 </h1>
-
-
-<p className="text-slate-500 mt-1">
-
+<p className="text-muted mb-0">
 Manage salary structure and employee allowance setup
-
 </p>
-
-
 </div>
 
 
 
-<div className="bg-green-100 px-5 py-3 rounded-xl">
-
-
-<p className="text-sm text-green-600">
-
+<div className="bg-light p-3 rounded border">
+<p className="small text-muted mb-2">
 Allowance Rules
-
 </p>
-
-
-<h2 className="text-2xl font-bold text-green-700">
-
+<h2 className="h3 fw-bold text-success mb-0">
 {allowances.length}
-
 </h2>
-
-
 </div>
 
 
@@ -194,36 +165,20 @@ Allowance Rules
 
 
 
-<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+<div className="row mb-5 g-3">
 
 
 
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<p className="text-slate-500">
-
-Fixed Salary
-
-</p>
-
-
-<h2 className="text-3xl font-bold text-indigo-600 mt-3">
-
-
+<div className="col-lg-4">
+<div className="card border-0 shadow-sm">
+<div className="card-body">
+<p className="text-muted small mb-2">Fixed Salary</p>
+<h2 className="h3 fw-bold text-primary mb-2">
 ₹ {fixedSalary.toLocaleString("en-IN")}
-
-
 </h2>
-
-
-<p className="text-xs text-slate-400 mt-2">
-
-Basic yearly salary
-
-</p>
-
-
+<p className="small text-muted mb-0">Basic yearly salary</p>
+</div>
+</div>
 </div>
 
 
@@ -232,31 +187,18 @@ Basic yearly salary
 
 
 
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<p className="text-slate-500">
-
-Total Allowance
-
-</p>
-
-
-<h2 className="text-3xl font-bold text-green-600 mt-3">
-
+<div className="col-lg-4">
+<div className="card border-0 shadow-sm">
+<div className="card-body">
+<p className="text-muted small mb-2">Total Allowance</p>
+<h2 className="h3 fw-bold text-success mb-2">
 {totalAllowancePercentage}%
-
 </h2>
-
-
-<p className="text-sm text-green-600 mt-2">
-
+<p className="small text-success mb-0">
 ₹ {totalAllowanceAmount.toLocaleString("en-IN")}
-
 </p>
-
-
-
+</div>
+</div>
 </div>
 
 
@@ -265,32 +207,16 @@ Total Allowance
 
 
 
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<p className="text-slate-500">
-
-Gross Salary
-
-</p>
-
-
-<h2 className="text-3xl font-bold text-blue-600 mt-3">
-
-
+<div className="col-lg-4">
+<div className="card border-0 shadow-sm">
+<div className="card-body">
+<p className="text-muted small mb-2">Gross Salary</p>
+<h2 className="h3 fw-bold text-info mb-2">
 ₹ {grossSalary.toLocaleString("en-IN")}
-
-
 </h2>
-
-
-<span className="text-xs text-slate-400">
-
-Salary after allowances
-
-</span>
-
-
+<span className="small text-muted">Salary after allowances</span>
+</div>
+</div>
 </div>
 
 
@@ -306,76 +232,29 @@ Salary after allowances
 
 
 {/* Fixed Salary */}
-
-
-
-<div className="bg-white rounded-2xl border shadow-sm p-6">
-
-
-<h2 className="text-xl font-semibold mb-5">
-
+<div className="card border-0 shadow-sm mb-5">
+<div className="card-body">
+<h5 className="card-title fw-bold mb-4">
 Fixed Salary Setup
-
-</h2>
-
-
-<label className="text-sm text-slate-500">
-
+</h5>
+<label className="form-label small text-muted">
 Annual Fixed Salary
-
 </label>
-
-
-<div className="flex mt-2">
-
-
-<span className="bg-slate-100 border px-5 flex items-center rounded-l-lg">
-
+<div className="input-group">
+<span className="input-group-text bg-light">
 ₹
-
 </span>
-
-
-
-
 <input
-
-
 type="number"
-
-
 value={fixedSalary}
-
-
 onChange={(e)=>
-
-setFixedSalary(
-Number(e.target.value)
-)
-
+setFixedSalary(Number(e.target.value))
 }
-
-
-className="
-border
-p-3
-w-full
-rounded-r-lg
-outline-none
-focus:ring-2
-focus:ring-indigo-500
-"
-
-
+className="form-control"
 placeholder="Enter salary"
-
 />
-
-
-
 </div>
-
-
+</div>
 </div>
 
 
@@ -387,136 +266,48 @@ placeholder="Enter salary"
 
 
 {/* Allowances Section */}
-
-
-
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<div className="flex justify-between items-center flex-wrap gap-4 mb-6">
-
-
-
+<div className="card border-0 shadow-sm mb-5">
+<div className="card-body">
+<div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 <div>
-
-
-<h2 className="text-2xl font-semibold">
-
+<h5 className="card-title fw-bold">
 Allowances
-
-</h2>
-
-
-<p className="text-sm text-slate-500">
-
+</h5>
+<p className="small text-muted mb-0">
 Configure employee benefits and additions
-
 </p>
-
-
 </div>
-
-
-
-
-
 <button
-
-
 onClick={addAllowance}
-
-
-className="
-bg-indigo-600
-hover:bg-indigo-700
-text-white
-px-5
-py-3
-rounded-xl
-shadow
-transition
-"
-
-
+className="btn btn-primary btn-sm"
 >
-
 + Add Allowance
-
-
 </button>
-
-
-
 </div>
 
-
-
-
-
-
-
-<div className="space-y-5">
-
-
-
+<div className="d-flex flex-column gap-3">
 {
-
 allowances.length===0
-
-
 ?
-
-
-<div className="text-center py-10 text-slate-400">
-
+<div className="text-center text-muted py-4">
 No allowances added
-
 </div>
-
-
 :
-
-
 allowances.map(
 (allowance,index)=>(
-
-
 <AllowanceCard
-
 key={allowance.id}
-
 allowance={allowance}
-
 index={index}
-
-updateAllowance={
-updateAllowance
-}
-
-removeAllowance={
-removeAllowance
-}
-
-canDelete={
-allowances.length>1
-}
-
+updateAllowance={updateAllowance}
+removeAllowance={removeAllowance}
+canDelete={allowances.length>1}
 />
-
-
 )
-
 )
-
-
 }
-
-
-
 </div>
-
-
-
+</div>
 </div>
 
 
@@ -532,40 +323,26 @@ allowances.length>1
 
 
 
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<h2 className="text-2xl font-semibold mb-6">
-
+<div className="card border-0 shadow-sm">
+<div className="card-body">
+<h5 className="card-title fw-bold mb-4">
 Salary Structure Preview
-
-</h2>
-
-
-
-
-<div className="space-y-4">
+</h5>
 
 
 
 
-
-<div className="flex justify-between border-b pb-4">
-
-<span>
-
-Fixed Salary
-
-</span>
+<div className="border-bottom pb-3 mb-3">
 
 
-<span className="font-semibold">
 
+
+
+<div className="d-flex justify-content-between mb-3">
+<span className="text-muted">Fixed Salary</span>
+<span className="fw-bold">
 ₹ {fixedSalary.toLocaleString("en-IN")}
-
 </span>
-
-
 </div>
 
 
@@ -574,85 +351,46 @@ Fixed Salary
 
 
 {
-
 allowances.map(item=>(
-
-
 <div
-
 key={item.id}
-
-className="flex justify-between"
-
+className="d-flex justify-content-between mb-2"
 >
-
-
-<span>
-
+<span className="small">
 {item.name || "Allowance"}
-
-<span className="text-xs text-slate-400 ml-2">
-
+<span className="text-muted ms-2">
 ({item.percentage}%)
-
 </span>
-
-
 </span>
-
-
-
-<span className="text-green-600">
-
-
+<span className="text-success small">
 ₹
 {
-
 (
 fixedSalary *
 item.percentage /
 100
-
 ).toLocaleString("en-IN")
-
+}
+</span>
+</div>
+))
 }
 
 
-</span>
+
+
+
+
 
 
 
 </div>
 
-
-))
-
-}
-
-
-
-
-
-
-
-
-<div className="border-t pt-5 bg-green-50 rounded-xl p-4 flex justify-between text-xl font-bold">
-
-
-<span>
-
-Gross Salary
-
-</span>
-
-
-<span className="text-green-600">
-
+<div className="bg-light rounded p-3 d-flex justify-content-between">
+<span className="fw-bold">Gross Salary</span>
+<span className="text-success fw-bold">
 ₹ {grossSalary.toLocaleString("en-IN")}
-
 </span>
-
-
 </div>
 
 

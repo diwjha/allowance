@@ -16,19 +16,20 @@ export default function EmploymentInformationStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Employment Information
-      </h2>
+      </h4>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Date Of Joining
           </label>
 
           <input
             type="date"
+            className="form-control form-control-sm"
             value={formData.dateOfJoining}
             onChange={(e) =>
               updateField(
@@ -36,16 +37,16 @@ export default function EmploymentInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Employment Type
           </label>
 
           <select
+            className="form-select form-select-sm"
             value={formData.employmentType}
             onChange={(e) =>
               updateField(
@@ -53,7 +54,6 @@ export default function EmploymentInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           >
             <option value="PERMANENT">
               Permanent
@@ -73,12 +73,13 @@ export default function EmploymentInformationStep({
           </select>
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Position
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.position}
             onChange={(e) =>
               updateField(
@@ -86,17 +87,17 @@ export default function EmploymentInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
             placeholder="Software Engineer"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Branch Id
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.branchId}
             onChange={(e) =>
               updateField(
@@ -104,16 +105,16 @@ export default function EmploymentInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Account Number
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.accountNumber}
             onChange={(e) =>
               updateField(
@@ -121,7 +122,6 @@ export default function EmploymentInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 

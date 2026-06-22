@@ -138,16 +138,16 @@ export default function LocationDetailsStep({
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Location Details
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="row">
 
         {/* COUNTRY */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Country
           </label>
 
@@ -159,7 +159,7 @@ export default function LocationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Country
@@ -178,8 +178,8 @@ export default function LocationDetailsStep({
 
         {/* PROVINCE */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             Province
           </label>
 
@@ -191,7 +191,7 @@ export default function LocationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Province
@@ -210,8 +210,8 @@ export default function LocationDetailsStep({
 
         {/* DISTRICT */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-4 mb-3">
+          <label className="form-label fw-medium">
             District
           </label>
 
@@ -223,7 +223,7 @@ export default function LocationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select District

@@ -100,30 +100,17 @@ export default function EmployeeWizardPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="container-fluid p-4">
 
-      <div
-        className="
-        bg-white
-        rounded-3xl
-        shadow
-        p-6
-        mb-6
-        "
-      >
-        <h1 className="text-3xl font-bold">
-          Employee Wizard
-        </h1>
+      <div className="card mb-4 shadow-sm">
+        <div className="card-body">
+          <h3 className="card-title fw-bold mb-0">
+            Employee Wizard
+          </h3>
+        </div>
       </div>
 
-      <div
-        className="
-        flex
-        flex-wrap
-        gap-2
-        mb-6
-        "
-      >
+      <div className="d-flex flex-wrap gap-2 mb-4">
         {[
           "Personal",
           "Contact",
@@ -134,107 +121,89 @@ export default function EmployeeWizardPage() {
           "Family",
           "Review",
         ].map((item, index) => (
-          <div
+          <span
             key={item}
-            className={`px-4 py-2 rounded-xl
-            ${
+            className={`badge ${
               step === index + 1
-                ? "bg-indigo-600 text-white"
-                : "bg-slate-200"
+                ? "bg-primary"
+                : "bg-secondary"
             }`}
           >
             {item}
-          </div>
+          </span>
         ))}
       </div>
 
-      <div
-        className="
-        bg-white
-        rounded-3xl
-        shadow
-        p-8
-        "
-      >
+      <div className="card shadow-sm">
+        <div className="card-body">
 
-        {step === 1 && (
-          <PersonalInformationStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 1 && (
+            <PersonalInformationStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 2 && (
-          <ContactInformationStep
-            formData={formData}
-            updateField={updateField}
-            updateAddressField={
-              updateAddressField
-            }
-          />
-        )}
+          {step === 2 && (
+            <ContactInformationStep
+              formData={formData}
+              updateField={updateField}
+              updateAddressField={
+                updateAddressField
+              }
+            />
+          )}
 
-        {step === 3 && (
-          <EmploymentInformationStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 3 && (
+            <EmploymentInformationStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 4 && (
-          <OrganizationDetailsStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 4 && (
+            <OrganizationDetailsStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 5 && (
-          <EducationExperienceStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 5 && (
+            <EducationExperienceStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 6 && (
-          <GovernmentDetailsStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 6 && (
+            <GovernmentDetailsStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 7 && (
-          <FamilyInformationStep
-            formData={formData}
-            updateField={updateField}
-          />
-        )}
+          {step === 7 && (
+            <FamilyInformationStep
+              formData={formData}
+              updateField={updateField}
+            />
+          )}
 
-        {step === 8 && (
-          <ReviewAndSubmitStep
-            formData={formData}
-          />
-        )}
+          {step === 8 && (
+            <ReviewAndSubmitStep
+              formData={formData}
+            />
+          )}
 
+        </div>
       </div>
 
-      <div
-        className="
-        flex
-        justify-between
-        mt-6
-        "
-      >
+      <div className="d-flex justify-content-between mt-4">
 
         <button
           onClick={previousStep}
           disabled={step === 1}
-          className="
-          px-6
-          py-3
-          rounded-xl
-          bg-slate-300
-          disabled:opacity-50
-          "
+          className="btn btn-secondary btn-sm"
         >
           Previous
         </button>
@@ -242,13 +211,7 @@ export default function EmployeeWizardPage() {
         {step < 8 ? (
           <button
             onClick={nextStep}
-            className="
-            px-6
-            py-3
-            rounded-xl
-            bg-indigo-600
-            text-white
-            "
+            className="btn btn-primary btn-sm"
           >
             Next
           </button>
@@ -256,13 +219,7 @@ export default function EmployeeWizardPage() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="
-            px-6
-            py-3
-            rounded-xl
-            bg-green-600
-            text-white
-            "
+            className="btn btn-success btn-sm"
           >
             {loading
               ? "Saving..."

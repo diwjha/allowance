@@ -147,321 +147,291 @@ export default function EmployeeListPage() {
 
   if (showWizard) {
     return (
-      <div className="space-y-6">
+      <div className="mb-4">
         <button
           onClick={() =>
             setShowWizard(false)
           }
-          className="
-          bg-slate-200
-          hover:bg-slate-300
-          px-5
-          py-3
-          rounded-xl
-          font-semibold
-          "
+          className="btn btn-secondary btn-sm"
         >
           ← Back To Employee List
         </button>
 
-        <EmployeeWizardPage />
+        <div className="mt-3">
+          <EmployeeWizardPage />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="mb-5">
       {/* HERO */}
 
       <div
-        className="
-        bg-linear-to-r
-        from-indigo-600
-        via-purple-600
-        to-pink-500
-        rounded-3xl
-        p-8
-        text-white
-        shadow-xl
-        flex
-        justify-between
-        items-center
-        flex-wrap
-        gap-4
-        "
+        className="card shadow-lg mb-5"
+        style={{
+          backgroundColor: "#0d3b66",
+        }}
       >
-        <div>
-          <h1 className="text-4xl font-bold">
-            Employee Management
-          </h1>
+        <div className="card-body">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+              <h1 className="h1 fw-bold text-white mb-2">
+                Employee Management
+              </h1>
 
-          <p className="text-indigo-100 mt-2">
-            Manage employee lifecycle
-            and payroll.
-          </p>
+              <p className="text-white-50 mb-0">
+                Manage employee lifecycle
+                and payroll.
+              </p>
+            </div>
+
+            <button
+              onClick={() =>
+                setShowWizard(true)
+              }
+              className="btn btn-light btn-sm fw-bold"
+            >
+              + Add Employee
+            </button>
+          </div>
         </div>
-
-        <button
-          onClick={() =>
-            setShowWizard(true)
-          }
-          className="
-          bg-white
-          text-indigo-600
-          px-6
-          py-3
-          rounded-xl
-          font-semibold
-          shadow
-          "
-        >
-          + Add Employee
-        </button>
       </div>
 
       {/* STATS */}
 
-      <div className="grid lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-3xl shadow-lg p-6">
-          <p className="text-slate-500">
-            Total Employees
-          </p>
+      <div className="row mb-5 g-3">
+        <div className="col-lg-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">
+                Total Employees
+              </p>
 
-          <h2 className="text-4xl font-bold mt-2">
-            {employees.length}
-          </h2>
+              <h2 className="h2 fw-bold mb-0">
+                {employees.length}
+              </h2>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-lg p-6">
-          <p className="text-slate-500">
-            Permanent
-          </p>
+        <div className="col-lg-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">
+                Permanent
+              </p>
 
-          <h2 className="text-4xl font-bold text-green-600 mt-2">
-            {
-              employees.filter(
-                (e) =>
-                  e.employmentType ===
-                  "PERMANENT"
-              ).length
-            }
-          </h2>
+              <h2 className="h2 fw-bold text-success mb-0">
+                {
+                  employees.filter(
+                    (e) =>
+                      e.employmentType ===
+                      "PERMANENT"
+                  ).length
+                }
+              </h2>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-lg p-6">
-          <p className="text-slate-500">
-            Contract
-          </p>
+        <div className="col-lg-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">
+                Contract
+              </p>
 
-          <h2 className="text-4xl font-bold text-yellow-600 mt-2">
-            {
-              employees.filter(
-                (e) =>
-                  e.employmentType ===
-                  "CONTRACT"
-              ).length
-            }
-          </h2>
+              <h2 className="h2 fw-bold text-warning mb-0">
+                {
+                  employees.filter(
+                    (e) =>
+                      e.employmentType ===
+                      "CONTRACT"
+                  ).length
+                }
+              </h2>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-lg p-6">
-          <p className="text-slate-500">
-            Departments
-          </p>
+        <div className="col-lg-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">
+                Departments
+              </p>
 
-          <h2 className="text-4xl font-bold text-indigo-600 mt-2">
-            {
-              new Set(
-                employees.map(
-                  (e) =>
-                    e.departmentName
-                )
-              ).size
-            }
-          </h2>
+              <h2 className="h2 fw-bold text-primary mb-0">
+                {
+                  new Set(
+                    employees.map(
+                      (e) =>
+                        e.departmentName
+                    )
+                  ).size
+                }
+              </h2>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* SEARCH */}
 
-      <div className="bg-white rounded-3xl shadow-lg p-6">
-        <input
-          type="text"
-          placeholder="Search Employee..."
-          value={search}
-          onChange={(e) =>
-            setSearch(
-              e.target.value
-            )
-          }
-          className="
-          w-full
-          border
-          rounded-xl
-          p-3
-          outline-none
-          focus:ring-2
-          focus:ring-indigo-500
-          "
-        />
+      <div className="card shadow-sm mb-5">
+        <div className="card-body">
+          <input
+            type="text"
+            placeholder="Search Employee..."
+            value={search}
+            onChange={(e) =>
+              setSearch(
+                e.target.value
+              )
+            }
+            className="form-control"
+          />
+        </div>
       </div>
 
       {/* TABLE */}
 
-      <div className="bg-white rounded-3xl shadow-xl overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-slate-100">
-            <tr>
-              <th className="p-5 text-left">
-                Employee Code
-              </th>
-
-              <th className="p-5 text-left">
-                Name
-              </th>
-
-              <th className="p-5 text-left">
-                Position
-              </th>
-
-              <th className="p-5 text-left">
-                Department
-              </th>
-
-              <th className="p-5 text-left">
-                Ministry
-              </th>
-
-              <th className="p-5 text-left">
-                Mobile
-              </th>
-
-              <th className="p-5 text-left">
-                Actions
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {loading ? (
+      <div className="card shadow-lg overflow-auto">
+        <div className="table-responsive">
+          <table className="table table-sm table-hover mb-0">
+            <thead className="table-light">
               <tr>
-                <td
-                  colSpan={7}
-                  className="
-                  p-10
-                  text-center
-                  "
-                >
-                  Loading...
-                </td>
+                <th className="fw-bold">
+                  Employee Code
+                </th>
+
+                <th className="fw-bold">
+                  Name
+                </th>
+
+                <th className="fw-bold">
+                  Position
+                </th>
+
+                <th className="fw-bold">
+                  Department
+                </th>
+
+                <th className="fw-bold">
+                  Ministry
+                </th>
+
+                <th className="fw-bold">
+                  Mobile
+                </th>
+
+                <th className="fw-bold">
+                  Actions
+                </th>
               </tr>
-            ) : filteredEmployees.length ===
-              0 ? (
-              <tr>
-                <td
-                  colSpan={7}
-                  className="
-                  p-10
-                  text-center
-                  text-slate-500
-                  "
-                >
-                  No Employees Found
-                </td>
-              </tr>
-            ) : (
-              filteredEmployees.map(
-                (emp) => (
-                  <tr
-                    key={
-                      emp.employeeCode
-                    }
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={7}
                     className="
-                    border-t
-                    hover:bg-slate-50
+                    p-4
+                    text-center
                     "
                   >
-                    <td className="p-5">
-                      {
+                    Loading...
+                  </td>
+                </tr>
+              ) : filteredEmployees.length ===
+                0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="
+                    p-4
+                    text-center
+                    text-muted
+                    "
+                  >
+                    No Employees Found
+                  </td>
+                </tr>
+              ) : (
+                filteredEmployees.map(
+                  (emp) => (
+                    <tr
+                      key={
                         emp.employeeCode
                       }
-                    </td>
-
-                    <td className="p-5">
-                      {emp.firstName}{" "}
-                      {emp.lastName}
-                    </td>
-
-                    <td className="p-5">
-                      {emp.position}
-                    </td>
-
-                    <td className="p-5">
-                      {
-                        emp.departmentName
-                      }
-                    </td>
-
-                    <td className="p-5">
-                      {
-                        emp.ministryName
-                      }
-                    </td>
-
-                    <td className="p-5">
-                      {
-                        emp.mobileNumber
-                      }
-                    </td>
-
-                    <td className="p-5 flex gap-2">
-                      <button
-                        className="
-                        bg-blue-500
-                        text-white
-                        px-3
-                        py-2
-                        rounded-lg
-                        "
-                      >
-                        View
-                      </button>
-
-                      <button
-                        className="
-                        bg-green-500
-                        text-white
-                        px-3
-                        py-2
-                        rounded-lg
-                        "
-                      >
-                        Edit
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleDelete(
-                            emp.employeeCode
-                          )
+                    >
+                      <td>
+                        {
+                          emp.employeeCode
                         }
-                        className="
-                        bg-red-500
-                        text-white
-                        px-3
-                        py-2
-                        rounded-lg
-                        "
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+                      </td>
+
+                      <td>
+                        {emp.firstName}{" "}
+                        {emp.lastName}
+                      </td>
+
+                      <td>
+                        {emp.position}
+                      </td>
+
+                      <td>
+                        {
+                          emp.departmentName
+                        }
+                      </td>
+
+                      <td>
+                        {
+                          emp.ministryName
+                        }
+                      </td>
+
+                      <td>
+                        {
+                          emp.mobileNumber
+                        }
+                      </td>
+
+                      <td className="d-flex gap-2">
+                        <button
+                          className="btn btn-info btn-sm"
+                        >
+                          View
+                        </button>
+
+                        <button
+                          className="btn btn-success btn-sm"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleDelete(
+                              emp.employeeCode
+                            )
+                          }
+                          className="btn btn-danger btn-sm"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  )
                 )
-              )
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

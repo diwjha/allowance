@@ -20,46 +20,27 @@ export default function AllowanceCard({
   canDelete,
 }: AllowanceCardProps) {
   return (
-    <div
-      className="
-        bg-white
-        rounded-3xl
-        shadow-lg
-        border
-        border-slate-200
-        overflow-hidden
-        hover:shadow-xl
-        transition-all
-        duration-300
-      "
-    >
+    <div className="card border mb-4 shadow-sm">
       {/* Header */}
-      <div className="bg-linear-to-r from-emerald-500 via-green-500 to-teal-500 px-6 py-4">
-
-        <h2 className="text-white font-bold text-lg">
-          Allowance {index + 1}
-        </h2>
-
-        <p className="text-emerald-100 text-sm">
-          Configure employee allowance percentage
-        </p>
-
+      <div
+        className="card-header text-white fw-bold"
+        style={{ backgroundColor: "#0d3b66" }}
+      >
+        💰 Allowance {index + 1}
       </div>
 
       {/* Content */}
-      <div className="p-6">
-
-        <div className="grid md:grid-cols-2 gap-5">
-
+      <div className="card-body">
+        <div className="row">
           {/* Allowance Name */}
-          <div>
-
-            <label className="block mb-2 text-sm font-medium text-slate-700">
-              💰 Allowance Name
+          <div className="col-md-6 mb-3">
+            <label className="form-label small fw-medium">
+              Allowance Name
             </label>
 
             <input
               type="text"
+              className="form-control form-control-sm"
               value={allowance.name}
               placeholder={`Allowance ${index + 1}`}
               onChange={(e) =>
@@ -69,56 +50,19 @@ export default function AllowanceCard({
                   e.target.value
                 )
               }
-              className="
-                w-full
-                p-3
-                border
-                border-slate-300
-                rounded-xl
-                outline-none
-                focus:ring-2
-                focus:ring-emerald-400
-                focus:border-emerald-400
-                transition
-              "
             />
-
           </div>
 
           {/* Percentage */}
-          <div>
-
-            <label className="block mb-2 text-sm font-medium text-slate-700">
-              📊 Allowance Percentage
+          <div className="col-md-6 mb-3">
+            <label className="form-label small fw-medium">
+              Allowance Percentage
             </label>
 
-            <div
-              className="
-                flex
-                rounded-xl
-                overflow-hidden
-                border
-                border-slate-300
-                focus-within:ring-2
-                focus-within:ring-emerald-400
-              "
-            >
-
-              <span
-                className="
-                  bg-slate-100
-                  px-4
-                  flex
-                  items-center
-                  font-semibold
-                  text-slate-600
-                "
-              >
-                %
-              </span>
-
+            <div className="input-group input-group-sm">
               <input
                 type="number"
+                className="form-control"
                 value={allowance.percentage}
                 onChange={(e) =>
                   updateAllowance(
@@ -127,49 +71,27 @@ export default function AllowanceCard({
                     Number(e.target.value)
                   )
                 }
-                className="
-                  w-full
-                  p-3
-                  outline-none
-                  bg-white
-                "
               />
-
+              <span className="input-group-text">%</span>
             </div>
-
           </div>
-
         </div>
 
         {/* Delete Button */}
         {canDelete && (
-          <div className="mt-6 flex justify-end">
-
+          <div className="mt-3 text-end">
             <button
               onClick={() =>
                 removeAllowance(
                   allowance.id
                 )
               }
-              className="
-                px-5
-                py-2.5
-                rounded-xl
-                bg-red-500
-                hover:bg-red-600
-                text-white
-                font-medium
-                shadow-md
-                transition-all
-                duration-200
-              "
+              className="btn btn-danger btn-sm"
             >
-              🗑 Remove Allowance
+              🗑 Remove
             </button>
-
           </div>
         )}
-
       </div>
     </div>
   );

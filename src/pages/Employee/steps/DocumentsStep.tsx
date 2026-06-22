@@ -52,16 +52,16 @@ export default function DocumentsStep({
 }: Props) {
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Documents
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="row">
 
         {/* Photograph */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Employee Photograph
           </label>
 
@@ -74,11 +74,11 @@ export default function DocumentsStep({
                 e.target.files?.[0] || null
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
 
           {formData.photograph && (
-            <p className="text-green-600 mt-2">
+            <p className="text-success mt-2 small">
               {formData.photograph.name}
             </p>
           )}
@@ -86,8 +86,8 @@ export default function DocumentsStep({
 
         {/* National ID */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             National ID
           </label>
 
@@ -99,11 +99,11 @@ export default function DocumentsStep({
                 e.target.files?.[0] || null
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
 
           {formData.nationalId && (
-            <p className="text-green-600 mt-2">
+            <p className="text-success mt-2 small">
               {formData.nationalId.name}
             </p>
           )}
@@ -111,8 +111,8 @@ export default function DocumentsStep({
 
         {/* Education Certificate */}
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Education Certificate
           </label>
 
@@ -124,11 +124,11 @@ export default function DocumentsStep({
                 e.target.files?.[0] || null
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
 
           {formData.educationCertificate && (
-            <p className="text-green-600 mt-2">
+            <p className="text-success mt-2 small">
               {formData.educationCertificate.name}
             </p>
           )}

@@ -99,467 +99,210 @@ export default function DeductionPage() {
 
 
   return (
+    <div className="container-fluid">
 
-<div className="space-y-8">
 
+      {/* Header */}
 
-{/* Header */}
+      <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-5">
+        <div>
+          <h1 className="display-5 fw-bold mb-2">
+            Deduction Management
+          </h1>
+          <p className="text-muted">
+            Manage employee deductions and statutory payroll rules
+          </p>
+        </div>
 
-<div className="flex justify-between items-center flex-wrap gap-4">
+        <div className="card border-0 shadow-sm" style={{ backgroundColor: "#f8f9fa" }}>
+          <div className="card-body py-2 px-3">
+            <p className="text-muted small mb-1">Total Rules</p>
+            <h5 className="fw-bold mb-0" style={{ color: "#0d3b66" }}>{deductions.length}</h5>
+          </div>
+        </div>
+      </div>
 
-<div>
 
-<h1 className="text-3xl font-bold text-slate-800">
-Deduction Management
-</h1>
 
-<p className="text-slate-500 mt-1">
-Manage employee deductions and statutory payroll rules
-</p>
 
-</div>
 
+      {/* Summary Cards */}
 
-<div className="bg-indigo-100 px-5 py-3 rounded-xl">
+      <div className="row g-4 mb-5">
 
-<p className="text-sm text-indigo-600">
-Total Rules
-</p>
 
-<h2 className="text-2xl font-bold text-indigo-700">
-{deductions.length}
-</h2>
+        <div className="col-lg-4 col-md-6">
+          <div className="card border-0 shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Annual Salary</p>
+              <h5 className="fw-bold mb-2" style={{ color: "#0d3b66", fontSize: "1.5rem" }}>
+                ₹ {annualSalary.toLocaleString("en-IN")}
+              </h5>
+              <span className="text-muted small">Yearly CTC calculation</span>
+            </div>
+          </div>
+        </div>
 
-</div>
 
-</div>
 
 
 
+        <div className="col-lg-4 col-md-6">
+          <div className="card border-0 shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Total Deduction</p>
+              <h5 className="fw-bold mb-2 text-danger" style={{ fontSize: "1.5rem" }}>{totalDeductionPercentage}%</h5>
+              <p className="small text-danger mb-0">₹ {totalDeductionAmount.toLocaleString("en-IN")}</p>
+            </div>
+          </div>
+        </div>
 
 
-{/* Summary Cards */}
 
 
-<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
 
+        <div className="col-lg-4 col-md-6">
+          <div className="card border-0 shadow-sm">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Net Salary</p>
+              <h5 className="fw-bold mb-2 text-success" style={{ fontSize: "1.5rem" }}>
+                ₹ {netSalary.toLocaleString("en-IN")}
+              </h5>
+              <span className="text-muted small">After deductions</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div className="bg-white border rounded-2xl shadow-sm p-6">
 
-<p className="text-slate-500">
-Annual Salary
-</p>
 
 
-<h2 className="text-3xl font-bold text-indigo-600 mt-3">
 
-₹ {annualSalary.toLocaleString("en-IN")}
 
-</h2>
 
+      {/* Salary Section */}
 
-<span className="text-xs text-slate-400">
-Yearly CTC calculation
-</span>
+      <div className="card border-0 shadow-sm mb-5">
+        <div className="card-body">
+          <h5 className="card-title fw-bold mb-4">
+            Salary Calculation
+          </h5>
 
-</div>
+          <label className="form-label small text-muted">
+            Annual Salary Amount
+          </label>
 
-
-
-
-
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<p className="text-slate-500">
-Total Deduction
-</p>
-
-
-<h2 className="text-3xl font-bold text-red-600 mt-3">
-
-{totalDeductionPercentage}%
-
-</h2>
-
-
-<p className="text-sm text-red-500 mt-2">
-
-₹ {totalDeductionAmount.toLocaleString("en-IN")}
-
-</p>
-
-
-</div>
-
-
-
-
-
-<div className="bg-white border rounded-2xl shadow-sm p-6">
-
-
-<p className="text-slate-500">
-Net Salary
-</p>
-
-
-<h2 className="text-3xl font-bold text-green-600 mt-3">
-
-₹ {netSalary.toLocaleString("en-IN")}
-
-</h2>
-
-
-<span className="text-xs text-slate-400">
-After deductions
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-{/* Salary Section */}
-
-
-<div className="bg-white rounded-2xl shadow-sm border p-6">
-
-
-<h2 className="text-xl font-semibold mb-5">
-Salary Calculation
-</h2>
-
-
-
-<label className="text-sm text-slate-500">
-Annual Salary Amount
-</label>
-
-
-<div className="flex mt-2">
-
-
-<span className="bg-slate-100 border px-5 flex items-center rounded-l-lg">
-₹
-</span>
-
-
-
-<input
-
-type="number"
-
-value={annualSalary}
-
-onChange={(e)=>
-setAnnualSalary(
-Number(e.target.value)
-)
-}
-
-className="
-border 
-p-3
-w-full
-rounded-r-lg
-focus:ring-2
-focus:ring-indigo-500
-outline-none
-"
-
-/>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-{/* Deduction Rules */}
-
-
-<div className="bg-white rounded-2xl shadow-sm border p-6">
-
-
-<div className="flex justify-between items-center flex-wrap gap-4 mb-6">
-
-
-<div>
-
-<h2 className="text-2xl font-semibold">
-Deduction Rules
-</h2>
-
-
-<p className="text-sm text-slate-500">
-Configure percentage based deductions
-</p>
-
-
-</div>
-
-
-
-
-<button
-
-onClick={addDeduction}
-
-className="
-bg-indigo-600
-hover:bg-indigo-700
-text-white
-px-5
-py-3
-rounded-xl
-shadow
-transition
-"
-
->
-
-+ Add Deduction
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-<div className="space-y-5">
-
-
-{
-deductions.length===0
-
-?
-
-<div className="text-center py-10 text-slate-400">
-
-No deductions configured
-
-</div>
-
-
-:
-
-
-deductions.map(
-(deduction,index)=>(
-
-
-<DeductionCard
-
-key={deduction.id}
-
-deduction={deduction}
-
-index={index}
-
-updateDeduction={
-updateDeduction
-}
-
-removeDeduction={
-removeDeduction
-}
-
-canDelete={
-deductions.length>1
-}
-
-/>
-
-
-)
-
-)
-
-
-}
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* Preview */}
-
-
-
-<div className="bg-white rounded-2xl shadow-sm border p-6">
-
-
-<h2 className="text-2xl font-semibold mb-6">
-Payroll Preview
-</h2>
-
-
-
-
-<div className="space-y-4">
-
-
-
-<div className="flex justify-between border-b pb-4">
-
-<span>
-Annual Salary
-</span>
-
-
-<span className="font-semibold">
-
-₹ {annualSalary.toLocaleString("en-IN")}
-
-</span>
-
-
-</div>
-
-
-
-
-{
-deductions.map(item=>(
-
-
-<div
-
-key={item.id}
-
-className="
-flex
-justify-between
-items-center
-"
-
->
-
-
-<span>
-
-{item.name || "Unnamed Deduction"}
-
-<span className="text-xs text-slate-400 ml-2">
-({item.percentage}%)
-</span>
-
-
-</span>
-
-
-
-
-<span className="text-red-600 font-medium">
-
-₹
-{
-(
-annualSalary *
-item.percentage
-/
-100
-).toLocaleString("en-IN")
-}
-
-
-</span>
-
-
-
-</div>
-
-
-))
-
-}
-
-
-
-
-
-
-<div className="border-t pt-5 flex justify-between text-lg font-bold">
-
-
-<span>
-Total Deduction
-</span>
-
-
-<span className="text-red-600">
-
-₹ {totalDeductionAmount.toLocaleString("en-IN")}
-
-</span>
-
-
-</div>
-
-
-
-
-
-<div className="bg-green-50 rounded-xl p-4 flex justify-between text-xl font-bold">
-
-
-<span>
-Net Salary
-</span>
-
-
-<span className="text-green-600">
-
-₹ {netSalary.toLocaleString("en-IN")}
-
-</span>
-
-
-</div>
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
+          <div className="input-group">
+            <span className="input-group-text bg-light">₹</span>
+            <input
+              type="number"
+              value={annualSalary}
+              onChange={(e) => setAnnualSalary(Number(e.target.value))}
+              className="form-control"
+            />
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+      {/* Deduction Rules */}
+
+      <div className="card border-0 shadow-sm mb-5">
+        <div className="card-body">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+              <h5 className="card-title fw-bold mb-1">
+                Deduction Rules
+              </h5>
+              <p className="text-muted small mb-0">
+                Configure percentage based deductions
+              </p>
+            </div>
+
+            <button
+              onClick={addDeduction}
+              className="btn btn-primary btn-sm"
+            >
+              + Add Deduction
+            </button>
+          </div>
+          <div className="vstack gap-3">
+            {deductions.length === 0 ? (
+              <div className="text-center py-5 text-muted">
+                No deductions configured
+              </div>
+            ) : (
+              deductions.map((deduction, index) => (
+                <DeductionCard
+                  key={deduction.id}
+                  deduction={deduction}
+                  index={index}
+                  updateDeduction={updateDeduction}
+                  removeDeduction={removeDeduction}
+                  canDelete={deductions.length > 1}
+                />
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+      {/* Preview */}
+
+      <div className="card border-0 shadow-sm">
+        <div className="card-body">
+          <h5 className="card-title fw-bold mb-4">
+            Payroll Preview
+          </h5>          <div className="vstack gap-2">
+            <div className="d-flex justify-content-between pb-2 border-bottom">
+              <span>Annual Salary</span>
+              <span className="fw-bold">
+                ₹ {annualSalary.toLocaleString("en-IN")}
+              </span>
+            </div>
+            {deductions.map((item) => (
+              <div key={item.id} className="d-flex justify-content-between align-items-center">
+                <span>
+                  {item.name || "Unnamed Deduction"}
+                  <span className="text-muted small ms-2">
+                    ({item.percentage}%)
+                  </span>
+                </span>
+                <span className="text-danger fw-bold">
+                  ₹{(annualSalary * item.percentage / 100).toLocaleString("en-IN")}
+                </span>
+              </div>
+            ))}
+
+            <div className="d-flex justify-content-between pb-2 border-top pt-2">
+              <span className="fw-bold">Total Deduction</span>
+              <span className="text-danger fw-bold">
+                ₹ {totalDeductionAmount.toLocaleString("en-IN")}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between p-3 rounded" style={{ backgroundColor: "#d4edda" }}>
+              <span className="fw-bold">Net Salary</span>
+              <span className="text-success fw-bold">
+                ₹ {netSalary.toLocaleString("en-IN")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
+
 }

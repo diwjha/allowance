@@ -115,14 +115,14 @@ export default function AddressDetailsStep({
 }: Props) {
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Address Details
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             House Number
           </label>
 
@@ -135,12 +135,12 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="House Number"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Street
           </label>
 
@@ -153,12 +153,12 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Street"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Area
           </label>
 
@@ -171,12 +171,12 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Area"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Province Of Residence
           </label>
 
@@ -189,12 +189,12 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Province Of Residence"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Pin Code
           </label>
 
@@ -207,12 +207,12 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Pin Code"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Country
           </label>
 
@@ -225,7 +225,7 @@ export default function AddressDetailsStep({
               )
             }
             placeholder="Country"
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 

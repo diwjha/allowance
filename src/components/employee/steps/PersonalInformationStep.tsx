@@ -15,18 +15,19 @@ export default function PersonalInformationStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Personal Information
-      </h2>
+      </h4>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Employee Code
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.employeeCode}
             onChange={(e) =>
               updateField(
@@ -34,17 +35,17 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
             placeholder="EMP001"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Title
           </label>
 
           <select
+            className="form-select form-select-sm"
             value={formData.title}
             onChange={(e) =>
               updateField(
@@ -52,7 +53,6 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           >
             <option value="MR">MR</option>
             <option value="MS">MS</option>
@@ -62,12 +62,13 @@ export default function PersonalInformationStep({
           </select>
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             First Name
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.firstName}
             onChange={(e) =>
               updateField(
@@ -75,16 +76,16 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Last Name
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.lastName}
             onChange={(e) =>
               updateField(
@@ -92,16 +93,16 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Gender
           </label>
 
           <select
+            className="form-select form-select-sm"
             value={formData.gender}
             onChange={(e) =>
               updateField(
@@ -109,7 +110,6 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           >
             <option value="MALE">
               Male
@@ -121,13 +121,14 @@ export default function PersonalInformationStep({
           </select>
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Date Of Birth
           </label>
 
           <input
             type="date"
+            className="form-control form-control-sm"
             value={formData.dateOfBirth}
             onChange={(e) =>
               updateField(
@@ -135,7 +136,6 @@ export default function PersonalInformationStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 

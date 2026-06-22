@@ -16,18 +16,19 @@ export default function GovernmentDetailsStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Government Details
-      </h2>
+      </h4>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Civil Service Card ID
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.civilServiceCardId}
             onChange={(e) =>
               updateField(
@@ -35,16 +36,16 @@ export default function GovernmentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Social Security Number
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.socialSecurityNumber}
             onChange={(e) =>
               updateField(
@@ -52,7 +53,6 @@ export default function GovernmentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 

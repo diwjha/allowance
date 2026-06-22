@@ -15,18 +15,19 @@ export default function OrganizationDetailsStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Organization Details
-      </h2>
+      </h4>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Ministry ID
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.ministryId}
             onChange={(e) =>
               updateField(
@@ -34,16 +35,16 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Department ID
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.departmentId}
             onChange={(e) =>
               updateField(
@@ -51,16 +52,16 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Division
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.division}
             onChange={(e) =>
               updateField(
@@ -68,16 +69,16 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Country Key
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.countryKey}
             onChange={(e) =>
               updateField(
@@ -85,16 +86,16 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Province Key
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.provinceKey}
             onChange={(e) =>
               updateField(
@@ -102,16 +103,16 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             District Key
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.districtKey}
             onChange={(e) =>
               updateField(
@@ -119,7 +120,6 @@ export default function OrganizationDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 

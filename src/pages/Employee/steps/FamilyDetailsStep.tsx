@@ -74,19 +74,19 @@ export default function FamilyDetailsStep({
 }: Props) {
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Family Details
       </h2>
 
-      <div className="space-y-6">
+      <div className="mb-3">
 
         {/* SPOUSE */}
 
-        <div>
-          <label className="flex items-center gap-3 font-medium">
-
+        <div className="mb-4">
+          <div className="form-check">
             <input
               type="checkbox"
+              id="hasSpouse"
               checked={formData.hasSpouse}
               onChange={(e) =>
                 updateField(
@@ -94,18 +94,22 @@ export default function FamilyDetailsStep({
                   e.target.checked
                 )
               }
-              className="h-5 w-5"
+              className="form-check-input"
             />
 
-            Has Spouse
-
-          </label>
+            <label
+              htmlFor="hasSpouse"
+              className="form-check-label fw-medium"
+            >
+              Has Spouse
+            </label>
+          </div>
         </div>
 
         {/* CHILDREN */}
 
         <div>
-          <label className="block mb-2 font-medium">
+          <label className="form-label fw-medium">
             Number Of Eligible Children
           </label>
 
@@ -123,15 +127,10 @@ export default function FamilyDetailsStep({
               )
             }
             placeholder="0 - 3"
-            className="
-              border
-              rounded-xl
-              p-3
-              w-full
-            "
+            className="form-control form-control-sm"
           />
 
-          <p className="text-sm text-slate-500 mt-2">
+          <p className="small text-muted mt-2">
             Maximum 3 children allowed.
           </p>
         </div>

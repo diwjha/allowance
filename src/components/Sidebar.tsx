@@ -57,79 +57,32 @@ const menuItems: {
 export default function Sidebar({ activePage, setActivePage }: SidebarProps) {
   return (
     <aside
-      className="
-      fixed
-      top-0
-      left-0
-      w-72
-      h-screen
-      bg-white
-      border-r
-      border-slate-200
-      shadow-lg
-      flex
-      flex-col
-      z-40
-      "
+      className="position-fixed top-0 start-0 vh-100 border-end shadow-lg d-flex flex-column"
+      style={{
+        width: "250px",
+        backgroundColor: "#fff",
+        borderColor: "#dee2e6",
+        zIndex: 40,
+      }}
     >
       {/* Logo Section */}
-
       <div
-        className="
-        shrink-0
-        bg-linear-to-r
-        from-indigo-600
-        via-purple-600
-        to-pink-500
-        p-6
-        "
+        className="p-4 text-white flex-shrink-0"
+        style={{ backgroundColor: "#0d3b66" }}
       >
-        <h1
-          className="
-          text-2xl
-          font-bold
-          text-white
-          "
-        >
-          Payroll Admin
-        </h1>
-
-        <p
-          className="
-          text-indigo-100
-          text-sm
-          mt-2
-          "
-        >
+        <h5 className="mb-2 fw-bold">Payroll Admin</h5>
+        <small className="text-white-50">
           Global Payroll Management
-        </p>
+        </small>
       </div>
 
       {/* Navigation */}
-
-      <div
-        className="
-        flex-1
-        overflow-y-auto
-        px-4
-        py-6
-        "
-      >
-        <p
-          className="
-          text-xs
-          uppercase
-          tracking-widest
-          text-slate-400
-          font-semibold
-          mb-5
-          px-2
-          "
-        >
-          Navigation
+      <div className="flex-grow-1 overflow-auto px-3 py-4">
+        <p className="small text-muted fw-bold mb-3">
+          NAVIGATION
         </p>
 
-        <nav className="space-y-3">
+        <nav className="d-flex flex-column gap-2">
           {menuItems.map((item) => {
             const active = activePage === item.value;
 
@@ -137,80 +90,19 @@ export default function Sidebar({ activePage, setActivePage }: SidebarProps) {
               <button
                 key={item.value}
                 onClick={() => setActivePage(item.value)}
-                className={`
-                  relative
-                  w-full
-                  flex
-                  items-center
-                  gap-4
-                  px-4
-                  py-3
-                  rounded-2xl
-                  transition-all
-                  duration-300
-                  group
-
-                  ${
-                    active
-                      ? `
-                      bg-linear-to-r
-                      from-indigo-600
-                      to-purple-600
-                      text-white
-                      shadow-lg
-                      `
-                      : `
-                      text-slate-700
-                      hover:bg-slate-100
-                      `
-                  }
-                `}
+                className={`btn btn-sm text-start fw-medium ${
+                  active
+                    ? "btn-primary text-white"
+                    : "btn-light text-dark"
+                }`}
+                style={
+                  active
+                    ? { backgroundColor: "#0d3b66", borderColor: "#0d3b66" }
+                    : {}
+                }
               >
-                {active && (
-                  <span
-                    className="
-                    absolute
-                    left-0
-                    top-3
-                    bottom-3
-                    w-1
-                    rounded-r-full
-                    bg-white
-                    "
-                  />
-                )}
-
-                <span
-                  className={`
-                    w-11
-                    h-11
-                    flex
-                    items-center
-                    justify-center
-                    rounded-xl
-                    text-xl
-                    shrink-0
-                    transition-all
-
-                    ${
-                      active
-                        ? "bg-white/20"
-                        : "bg-slate-100 group-hover:bg-white"
-                    }
-                  `}
-                >
-                  {item.icon}
-                </span>
-
-                <span
-                  className="
-                  text-sm
-                  font-semibold
-                  truncate
-                  "
-                >
-                  {item.label}
-                </span>
+                <span className="me-2">{item.icon}</span>
+                {item.label}
               </button>
             );
           })}
@@ -218,41 +110,18 @@ export default function Sidebar({ activePage, setActivePage }: SidebarProps) {
       </div>
 
       {/* Footer */}
-
       <div
-        className="
-        p-5
-        border-t
-        border-slate-100
-        bg-white
-        "
+        className="p-3 border-top"
+        style={{ borderColor: "#dee2e6" }}
       >
-        <div
-          className="
-          rounded-2xl
-          bg-slate-50
-          p-4
-          "
-        >
-          <p
-            className="
-            text-sm
-            font-semibold
-            text-slate-700
-            "
-          >
+        <div className="p-3 rounded" style={{ backgroundColor: "#f8f9fa" }}>
+          <p className="small fw-bold mb-1">
             Payroll System
           </p>
 
-          <p
-            className="
-            text-xs
-            text-slate-500
-            mt-1
-            "
-          >
+          <small className="text-muted">
             Version 1.0
-          </p>
+          </small>
         </div>
       </div>
     </aside>

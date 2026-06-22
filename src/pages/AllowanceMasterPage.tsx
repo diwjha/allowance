@@ -137,352 +137,297 @@ export default function AllowanceMasterPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="mb-5">
       {/* HEADER */}
 
       <div
-        className="
-bg-linear-to-r
-from-indigo-600
-via-purple-600
-to-pink-500
-rounded-3xl
-p-8
-text-white
-shadow-xl
-flex
-justify-between
-items-center
-flex-wrap
-gap-5
-"
+        className="card shadow-lg mb-5"
+        style={{
+          backgroundColor: "#0d3b66",
+        }}
       >
-        <div>
-          <h1 className="text-4xl font-bold">Allowance Master</h1>
+        <div className="card-body">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+              <h1 className="h1 fw-bold text-white mb-2">
+                Allowance Master
+              </h1>
 
-          <p
-            className="
-text-indigo-100
-mt-2
-"
-          >
-            Manage payroll allowance configuration globally
-          </p>
+              <p className="text-white-50 mb-0">
+                Manage payroll allowance configuration globally
+              </p>
+            </div>
+
+            <button
+              onClick={openCreateModal}
+              className="btn btn-light btn-sm fw-bold"
+            >
+              + Add Allowance
+            </button>
+          </div>
         </div>
-
-        <button
-          onClick={openCreateModal}
-          className="
-bg-white
-text-indigo-600
-px-6
-py-3
-rounded-xl
-font-semibold
-shadow
-hover:scale-105
-transition
-"
-        >
-          + Add Allowance
-        </button>
       </div>
 
       {/* FILTER */}
 
-      <div
-        className="
-bg-white
-rounded-2xl
-shadow-lg
-p-6
-"
-      >
-        <div
-          className="
-grid
-lg:grid-cols-3
-gap-5
-"
-        >
-          <input
-            placeholder="Search allowance..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="
-border
-rounded-xl
-p-3
-focus:ring-2
-focus:ring-indigo-400
-outline-none
-"
-          />
+      <div className="card shadow-sm mb-5">
+        <div className="card-body">
+          <div className="row g-3">
+            <div className="col-lg-4">
+              <input
+                placeholder="Search allowance..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
+                className="form-control"
+              />
+            </div>
 
-          <select
-            value={countryFilter}
-            onChange={(e) => setCountryFilter(e.target.value)}
-            className="
-border
-rounded-xl
-p-3
-"
-          >
-            <option value="ALL">All Countries</option>
+            <div className="col-lg-4">
+              <select
+                value={countryFilter}
+                onChange={(e) =>
+                  setCountryFilter(e.target.value)
+                }
+                className="form-select"
+              >
+                <option value="ALL">All Countries</option>
 
-            <option value="IN">India</option>
+                <option value="IN">India</option>
 
-            <option value="US">USA</option>
-          </select>
+                <option value="US">USA</option>
+              </select>
+            </div>
 
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="
-border
-rounded-xl
-p-3
-"
-          >
-            <option value="ALL">All Status</option>
+            <div className="col-lg-4">
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value)
+                }
+                className="form-select"
+              >
+                <option value="ALL">All Status</option>
 
-            <option value="ACTIVE">Active</option>
+                <option value="ACTIVE">Active</option>
 
-            <option value="INACTIVE">Inactive</option>
-          </select>
+                <option value="INACTIVE">
+                  Inactive
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* TABLE */}
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="alert alert-danger mb-3">
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
-          <p className="text-gray-500">Loading allowances...</p>
+        <div className="card shadow-lg p-5 text-center">
+          <p className="text-muted mb-0">
+            Loading allowances...
+          </p>
         </div>
       ) : (
-        <div
-          className="
-bg-white
-rounded-3xl
-shadow-xl
-overflow-x-auto
-"
-        >
-          <table className="w-full">
-          <thead
-            className="
-bg-linear-to-r
-from-indigo-100
-to-purple-100
-"
-          >
-            <tr>
-              {[
-                "Name",
-                "Code",
-                "Country",
-                "Type",
-                "Default",
-                "Taxable",
-                "Status",
-                "Actions",
-              ].map((head) => (
-                <th
-                  key={head}
-                  className="
-p-5
-text-left
-text-slate-700
-"
-                >
-                  {head}
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <div className="card shadow-lg overflow-auto">
+          <div className="table-responsive">
+            <table className="table table-sm table-hover mb-0">
+              <thead className="table-light">
+                <tr>
+                  {[
+                    "Name",
+                    "Code",
+                    "Country",
+                    "Type",
+                    "Default",
+                    "Taxable",
+                    "Status",
+                    "Actions",
+                  ].map((head) => (
+                    <th key={head} className="fw-bold">
+                      {head}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
 
-          <tbody>
-            {filteredData.map((item) => (
-              <tr
-                key={item.id}
-                className="
-border-t
-hover:bg-slate-50
-transition
-"
-              >
-                <td className="p-5 font-medium">{item.allowanceName}</td>
+              <tbody>
+                {filteredData.map((item) => (
+                  <tr key={item.id}>
+                    <td className="fw-bold">
+                      {item.allowanceName}
+                    </td>
 
-                <td className="p-5">
-                  <span
-                    className="
-bg-indigo-100
-text-indigo-700
-px-3
-py-1
-rounded-full
-text-sm
-"
-                  >
-                    {item.allowanceCode}
-                  </span>
-                </td>
+                    <td>
+                      <span className="badge bg-primary">
+                        {item.allowanceCode}
+                      </span>
+                    </td>
 
-                <td className="p-5">{item.allowanceCountryCode}</td>
+                    <td>
+                      {item.allowanceCountryCode}
+                    </td>
 
-                <td className="p-5">{item.allowanceValueType}</td>
+                    <td>
+                      {item.allowanceValueType}
+                    </td>
 
-                <td className="p-5 font-semibold">{item.allowanceDefaultValue}</td>
+                    <td className="fw-bold">
+                      {
+                        item.allowanceDefaultValue
+                      }
+                    </td>
 
-                <td className="p-5">
-                  <Toggle
-                    checked={item.taxableStatus}
-                    onChange={() => {
-                      setAllowances((prev) =>
-                        prev.map((a) =>
-                          a.id === item.id
-                            ? {
-                                ...a,
-                                taxableStatus: !a.taxableStatus,
-                              }
-                            : a,
-                        ),
-                      );
-                    }}
-                  />
-                </td>
+                    <td>
+                      <Toggle
+                        checked={
+                          item.taxableStatus
+                        }
+                        onChange={() => {
+                          setAllowances(
+                            (prev) =>
+                              prev.map(
+                                (a) =>
+                                  a.id ===
+                                  item.id
+                                    ? {
+                                        ...a,
+                                        taxableStatus:
+                                          !a.taxableStatus,
+                                      }
+                                    : a
+                              )
+                          );
+                        }}
+                      />
+                    </td>
 
-                <td className="p-5">
-                  <span
-                    className={`
+                    <td>
+                      <span
+                        className={`badge ${
+                          item.allowanceStatus
+                            ? "bg-success"
+                            : "bg-danger"
+                        }`}
+                      >
+                        {item.allowanceStatus
+                          ? "Active"
+                          : "Inactive"}
+                      </span>
+                    </td>
 
-px-3
-py-1
-rounded-full
-text-sm
+                    <td className="d-flex gap-2">
+                      <button
+                        onClick={() =>
+                          openEditModal(item)
+                        }
+                        className="btn btn-info btn-sm"
+                      >
+                        Edit
+                      </button>
 
-${item.allowanceStatus ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}
-
-`}
-                  >
-                    {item.allowanceStatus ? "Active" : "Inactive"}
-                  </span>
-                </td>
-
-                <td className="p-5 flex gap-3">
-                  <button
-                    onClick={() => openEditModal(item)}
-                    className="
-bg-blue-500
-text-white
-px-4
-py-2
-rounded-lg
-hover:bg-blue-600
-"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => deleteAllowance(item.id)}
-                    className="
-bg-red-500
-text-white
-px-4
-py-2
-rounded-lg
-hover:bg-red-600
-"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      <button
+                        onClick={() =>
+                          deleteAllowance(
+                            item.id
+                          )
+                        }
+                        className="btn btn-danger btn-sm"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {/* MODAL */}
 
       <Modal
-        title={editingId ? "Edit Allowance" : "Create Allowance"}
+        title={
+          editingId
+            ? "Edit Allowance"
+            : "Create Allowance"
+        }
         isOpen={showModal}
         onClose={() => {
           setShowModal(false);
           resetForm();
         }}
       >
-        <div className="grid gap-4 md:grid-cols-2">
-          {["allowanceName", "allowanceCode", "allowanceDefaultValue", "allowanceMinValue", "allowanceMaxValue"].map(
-            (field) => (
+        <div className="row g-3">
+          {[
+            "allowanceName",
+            "allowanceCode",
+            "allowanceDefaultValue",
+            "allowanceMinValue",
+            "allowanceMaxValue",
+          ].map((field) => (
+            <div key={field} className="col-md-6">
               <input
-                key={field}
-                type={field.includes("Value") ? "number" : "text"}
+                type={
+                  field.includes("Value")
+                    ? "number"
+                    : "text"
+                }
                 placeholder={field}
                 value={(form as any)[field]}
                 onChange={(e) =>
                   setForm({
                     ...form,
 
-                    [field]: field.includes("Value")
+                    [field]: field.includes(
+                      "Value"
+                    )
                       ? Number(e.target.value)
                       : e.target.value,
                   })
                 }
-                className="
-border
-rounded-xl
-p-3
-"
+                className="form-control form-control-sm"
               />
-            ),
-          )}
+            </div>
+          ))}
 
-          <select
-            className="
-border
-rounded-xl
-p-3
-"
-            value={form.allowanceValueType}
-            onChange={(e) =>
-              setForm({
-                ...form,
+          <div className="col-md-6">
+            <select
+              className="form-select form-select-sm"
+              value={form.allowanceValueType}
+              onChange={(e) =>
+                setForm({
+                  ...form,
 
-                allowanceValueType: e.target.value as any,
-              })
-            }
-          >
-            <option value="PERCENTAGE">Percentage</option>
+                  allowanceValueType: e.target
+                    .value as any,
+                })
+              }
+            >
+              <option value="PERCENTAGE">
+                Percentage
+              </option>
 
-            <option value="FIXED_AMOUNT">Fixed Amount</option>
+              <option value="FIXED_AMOUNT">
+                Fixed Amount
+              </option>
 
-            <option value="UNIT">Unit</option>
-          </select>
+              <option value="UNIT">Unit</option>
+            </select>
+          </div>
         </div>
 
         <button
           onClick={saveAllowance}
-          className="
-mt-6
-bg-linear-to-r
-from-indigo-600
-to-purple-600
-text-white
-px-6
-py-3
-rounded-xl
-shadow
-"
+          className="btn btn-primary btn-sm mt-4"
         >
           Save Allowance
         </button>

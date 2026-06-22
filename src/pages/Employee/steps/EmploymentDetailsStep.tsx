@@ -193,14 +193,14 @@ export default function EmploymentDetailsStep({
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="h4 fw-bold mb-4">
         Employment Details
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Employee Code
           </label>
 
@@ -212,13 +212,13 @@ export default function EmploymentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
             placeholder="LAO00005"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Position
           </label>
 
@@ -230,13 +230,13 @@ export default function EmploymentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
             placeholder="Senior Officer"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Date Of Joining
           </label>
 
@@ -249,12 +249,12 @@ export default function EmploymentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Employment Type
           </label>
 
@@ -266,7 +266,7 @@ export default function EmploymentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="PERMANENT">
               Permanent
@@ -286,8 +286,8 @@ export default function EmploymentDetailsStep({
           </select>
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Education Level
           </label>
 
@@ -301,7 +301,7 @@ export default function EmploymentDetailsStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-select form-select-sm"
           >
             <option value="">
               Select Education Level
@@ -320,8 +320,8 @@ export default function EmploymentDetailsStep({
           </select>
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Prior Experience (Years)
           </label>
 
@@ -336,7 +336,7 @@ export default function EmploymentDetailsStep({
                 Number(e.target.value)
               )
             }
-            className="border rounded-xl p-3 w-full"
+            className="form-control form-control-sm"
           />
         </div>
 

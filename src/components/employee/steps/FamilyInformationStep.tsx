@@ -16,23 +16,18 @@ export default function FamilyInformationStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Family Information
-      </h2>
+      </h4>
 
-      <div className="space-y-6">
+      <div className="row">
 
-        <div
-          className="
-          border
-          rounded-2xl
-          p-5
-          "
-        >
-          <label className="flex items-center gap-4">
-
+        <div className="col-12 mb-3">
+          <div className="form-check">
             <input
               type="checkbox"
+              className="form-check-input"
+              id="hasSpouse"
               checked={formData.hasSpouse}
               onChange={(e) =>
                 updateField(
@@ -40,25 +35,26 @@ export default function FamilyInformationStep({
                   e.target.checked
                 )
               }
-              className="h-5 w-5"
             />
 
-            <span className="font-medium">
+            <label
+              className="form-check-label fw-medium"
+              htmlFor="hasSpouse"
+            >
               Employee Has Spouse
-            </span>
-
-          </label>
+            </label>
+          </div>
         </div>
 
-        <div>
-
-          <label className="block mb-2 font-medium">
+        <div className="col-md-6 mb-3">
+          <label className="form-label fw-medium">
             Number Of Eligible Children
           </label>
 
           <input
             type="number"
             min={0}
+            className="form-control form-control-sm"
             value={formData.noOfEligibleChildren}
             onChange={(e) =>
               updateField(
@@ -66,14 +62,7 @@ export default function FamilyInformationStep({
                 Number(e.target.value)
               )
             }
-            className="
-            border
-            rounded-xl
-            p-3
-            w-full
-            "
           />
-
         </div>
 
       </div>

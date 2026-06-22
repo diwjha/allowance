@@ -8,14 +8,13 @@ export default function PageHeader({
   description,
 }: PageHeaderProps) {
   return (
-    <div className="bg-linear-to-r from-indigo-600 via-purple-600 to-blue-600 rounded-3xl p-8 text-white shadow-xl">
-      <h1 className="text-4xl font-bold">
-        {title}
-      </h1>
+    <div
+      className="p-4 rounded text-white shadow-sm"
+      style={{ backgroundColor: "#0d3b66" }}
+    >
+      <h4 className="fw-bold mb-2">{title}</h4>
 
-      <p className="text-indigo-100 mt-2">
-        {description}
-      </p>
+      <small className="text-white-50">{description}</small>
     </div>
   );
 }

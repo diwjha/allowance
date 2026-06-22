@@ -1,0 +1,266 @@
+:root {
+  --bs-primary: #0d3b66;
+  /* Replace Bootstrap primary color with navy */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+/* Compact baseline for ALL tables */
+.table {
+  /* Keep Bootstrap look but denser */
+  --tbl-font-size: 0.82rem;
+  --tbl-padding-y: 6px;
+  /* cells */
+  --tbl-padding-x: 6px;
+  --tbl-head-padding-y: 6px;
+  --tbl-head-padding-x: 6px;
+  --tbl-head-font-size: 0.82rem;
+  --tbl-head-bg: #0d3b66;
+  --tbl-head-color: #FFF;
+
+  font-size: var(--tbl-font-size);
+}
+
+.table th,
+.table td {
+  padding: var(--tbl-padding-y) var(--tbl-padding-x);
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.table thead th {
+  background-color: var(--tbl-head-bg) !important;
+  color: var(--tbl-head-color) !important;
+  padding: var(--tbl-head-padding-y) var(--tbl-head-padding-x);
+  font-size: var(--tbl-head-font-size);
+  white-space: normal;
+  /* Allow wrapping */
+  word-break: break-word;
+}
+
+/* Reduce default table-sm extra spacing differences */
+.table.table-sm th,
+.table.table-sm td {
+  padding: calc(var(--tbl-padding-y) - 2px) calc(var(--tbl-padding-x) - 0px);
+}
+
+/* Optional: consistent hover and striped density */
+.table.table-hover tbody tr:hover {
+  filter: brightness(0.98);
+}
+
+.table-fixed {
+  table-layout: auto;
+  width: 100%;
+}
+
+.table-left-side-stick {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #f8f9fa;
+}
+
+/* Small react-select globally */
+.rs__control {
+  min-height: 30px !important;
+  height: 30px;
+  font-size: 0.85rem;
+}
+
+.rs__value-container {
+  padding: 0 8px;
+  height: 30px;
+}
+
+.rs__indicators {
+  height: 30px;
+}
+
+.rs__indicator {
+  padding: 4px;
+}
+
+.rs__menu {
+  font-size: 0.85rem;
+}
+
+/* Compact TreeTable */
+.p-treetable .p-treetable-tbody>tr>td {
+  padding: 4px 8px !important;
+}
+
+.p-treetable .p-treetable-thead>tr>th {
+  padding: 6px 8px !important;
+}
+
+.p-treetable {
+  font-size: 13px;
+}
+
+/* 🎯 Header background */
+.custom-table .p-treetable-thead>tr>th {
+  background-color: #0d3b66 !important;
+  /* Bootstrap primary */
+  color: white !important;
+  font-weight: 600;
+  padding: 8px;
+}
+
+/* 🔥 Outer border */
+.custom-table .p-treetable {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+/* 🔥 Header borders */
+.custom-table .p-treetable-thead>tr>th {
+  border: 1px solid #dee2e6;
+}
+
+/* 🔥 Body cell borders */
+.custom-table .p-treetable-tbody>tr>td {
+  border: 1px solid #dee2e6;
+}
+
+.text-truncate-custom {
+  max-width: 420px;
+  /* adjust as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #f1f1f1;
+}
+
+/* First column sticky */
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 30;
+}
+
+/* Make header first column stay above body */
+thead .sticky-col {
+  z-index: 40;
+}
+
+.sticky-table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+}
+
+/* Restore Bootstrap-like borders manually */
+.sticky-table th,
+.sticky-table td {
+  border: 1px solid #dde1e3 !important;
+  background-clip: padding-box;
+}
+
+/* HEADER STICKY */
+.sticky-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* FIRST COLUMN STICKY */
+.sticky-table .sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 40;
+}
+
+/* TOP-LEFT CORNER CELL (HEADER + FIRST COL) */
+.sticky-table thead .sticky-col {
+  z-index: 60;
+}
+
+/* Ministry */
+.row-ministry {
+  background-color: #e3f2fd !important;
+  font-weight: 600;
+}
+
+/* Province */
+.row-province {
+  background-color: #e8f5e9 !important;
+}
+
+/* District */
+.row-district {
+  background-color: #fff8e1 !important;
+}
+
+/* Budget */
+.row-budget {
+  background-color: #f3f4f6 !important;
+  font-style: italic;
+}
+
+/* Group rows */
+.row-group {
+  background-color: #e8f5e9;
+  /* change this */
+  color: #000;
+  /* text color */
+  font-weight: bold;
+}
+
+/* Budget rows */
+.row-budget {
+  background-color: #fff8e1;
+  /* change this */
+  color: #333;
+}
+
+@media print {
+
+  /* Hide everything */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only table area */
+  .print-table-area,
+  .print-table-area * {
+    visibility: visible;
+  }
+
+  .print-table-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Hide buttons completely */
+  button {
+    display: none !important;
+  }
+
+  /* Optional: remove background colors for clean print */
+  table {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+.custom-table .p-treetable-tbody>tr>td {
+  padding: 0.45rem 0.5rem !important;
+}
+
+.custom-table .p-treetable-thead>tr>th {
+  padding: 0.5rem !important;
+}

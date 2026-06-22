@@ -15,18 +15,19 @@ export default function EducationExperienceStep({
   return (
     <div>
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h4 className="fw-bold mb-4">
         Education & Experience
-      </h2>
+      </h4>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="row">
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Education Level ID
           </label>
 
           <input
+            className="form-control form-control-sm"
             value={formData.educationLevelId}
             onChange={(e) =>
               updateField(
@@ -34,18 +35,18 @@ export default function EducationExperienceStep({
                 e.target.value
               )
             }
-            className="border rounded-xl p-3 w-full"
             placeholder="BACHELOR"
           />
         </div>
 
-        <div>
-          <label className="block mb-2">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">
             Prior Experience (Years)
           </label>
 
           <input
             type="number"
+            className="form-control form-control-sm"
             value={formData.priorExperience}
             onChange={(e) =>
               updateField(
@@ -53,7 +54,6 @@ export default function EducationExperienceStep({
                 Number(e.target.value)
               )
             }
-            className="border rounded-xl p-3 w-full"
           />
         </div>
 

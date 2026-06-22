@@ -131,735 +131,205 @@ export default function DeductionMasterPage() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* HEADER */}
-
-      <div
-        className="
-bg-linear-to-r
-from-indigo-600
-via-purple-600
-to-blue-600
-rounded-3xl
-p-8
-text-white
-shadow-xl
-flex
-justify-between
-items-center
-flex-wrap
-gap-5
-"
-      >
-        <div>
-          <h1 className="text-4xl font-bold">Deduction Master</h1>
-
-          <p
-            className="
-text-indigo-100
-mt-2
-"
-          >
-            Manage payroll deduction configuration globally
-          </p>
+    <div className="mb-5">
+      <div className="card shadow-lg mb-5" style={{ backgroundColor: "#0d3b66" }}>
+        <div className="card-body text-white">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+              <h1 className="h1 fw-bold mb-2">Deduction Master</h1>
+              <p className="mb-0 text-white-50">Manage payroll deduction configuration globally</p>
+            </div>
+            <button onClick={openCreateModal} className="btn btn-light btn-sm fw-bold">+ Add Deduction</button>
+          </div>
         </div>
-
-        <button
-          onClick={openCreateModal}
-          className="
-bg-white
-text-indigo-600
-px-6
-py-3
-rounded-xl
-font-semibold
-shadow
-hover:scale-105
-transition
-"
-        >
-          + Add Deduction
-        </button>
       </div>
 
-
-
-
-
-{/* STATS */}
-
-<div className="grid md:grid-cols-3 gap-6">
-
-
-<div
-className="
-bg-white
-rounded-2xl
-shadow-lg
-p-6
-border
-hover:shadow-xl
-transition
-">
-
-<p className="text-slate-500">
-Total Deductions
-</p>
-
-<h2 className="text-4xl font-bold text-indigo-600 mt-2">
-{deductions.length}
-</h2>
-
-</div>
-
-
-
-
-<div
-className="
-bg-white
-rounded-2xl
-shadow-lg
-p-6
-border
-">
-
-<p className="text-slate-500">
-Active Deductions
-</p>
-
-<h2 className="text-4xl font-bold text-green-600 mt-2">
-
-{
-deductions.filter(
-d=>d.deductionStatus
-).length
-}
-
-</h2>
-
-</div>
-
-
-
-
-
-<div
-className="
-bg-white
-rounded-2xl
-shadow-lg
-p-6
-border
-">
-
-<p className="text-slate-500">
-Mandatory
-</p>
-
-{/* 
-<h2 className="text-4xl font-bold text-orange-500 mt-2">
-
-{
-deductions.filter(
-d=>d.mandatory
-).length
-}
-
-</h2> */}
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-{/* FILTER */}
-
-<div
-className="
-bg-white
-rounded-2xl
-shadow-lg
-p-6
-border
-">
-
-<div className="grid md:grid-cols-2 gap-5">
-
-
-<input
-
-placeholder="Search deduction..."
-
-value={search}
-
-onChange={
-e=>setSearch(e.target.value)
-}
-
-className="
-border
-rounded-xl
-px-4
-py-3
-outline-none
-focus:ring-2
-focus:ring-indigo-500
-"
-/>
-
-
-
-
-
-<select
-
-value={countryFilter}
-
-onChange={
-e=>setCountryFilter(e.target.value)
-}
-
-className="
-border
-rounded-xl
-px-4
-py-3
-"
-
->
-
-
-<option value="ALL">
-All Countries
-</option>
-
-<option value="IN">
-India
-</option>
-
-<option value="US">
-USA
-</option>
-
-<option value="GB">
-UK
-</option>
-
-
-</select>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-{/* TABLE */}
-
-
-<div
-className="
-bg-white
-rounded-3xl
-shadow-xl
-border
-overflow-x-auto
-">
-
-
-<table className="w-full">
-
-
-<thead
-className="
-bg-slate-100
-text-slate-600
-">
-
-<tr>
-
-<th className="p-5 text-left">
-Name
-</th>
-
-<th className="p-5 text-left">
-Code
-</th>
-
-<th className="p-5 text-left">
-Country
-</th>
-
-<th className="p-5 text-left">
-Type
-</th>
-
-<th className="p-5 text-left">
-Default
-</th>
-
-<th className="p-5">
-Mandatory
-</th>
-
-<th className="p-5">
-Active
-</th>
-
-<th className="p-5">
-Actions
-</th>
-
-
-</tr>
-
-</thead>
-
-
-
-
-
-<tbody>
-
-
-{
-filteredData.map(item=>(
-
-
-<tr
-key={item.id}
-className="
-border-t
-hover:bg-indigo-50
-transition
-">
-
-
-<td className="p-5 font-semibold">
-{item.deductionName}
-</td>
-
-
-<td className="p-5">
-
-<span
-className="
-px-3
-py-1
-rounded-full
-bg-indigo-100
-text-indigo-700
-"
->
-
-{item.deductionCode}
-
-</span>
-
-</td>
-
-
-<td className="p-5">
-{item.deductionCountryCode}
-</td>
-
-
-<td className="p-5">
-{item.deductionValueType}
-</td>
-
-
-<td className="p-5 font-semibold">
-{item.deductionDefaultValue}
-</td>
-
-
-
-{/* <td className="p-5">
-<Toggle
-checked={item.mandatory}
-onChange={()=>
-
-setDeductions(prev=>
-prev.map(d=>
-d.id===item.id
-?
-{
-...d,
-mandatory:!d.mandatory
-}
-:d
-)
-)
-
-}
-/>
-</td> */}
-
-
-
-
-<td className="p-5">
-
-<Toggle
-
-checked={item.deductionStatus}
-
-onChange={()=>
-
-
-setDeductions(prev=>
-prev.map(d=>
-
-d.id===item.id
-
-?
-
-{
-...d,
-deductionStatus:!d.deductionStatus
-}
-
-:d
-
-)
-
-)
-
-
-}
-
-/>
-
-</td>
-
-
-
-
-
-<td className="p-5 flex gap-2">
-
-
-<button
-
-onClick={()=>openEditModal(item)}
-
-className="
-bg-blue-500
-text-white
-px-4
-py-2
-rounded-lg
-hover:bg-blue-600
-"
-
->
-
-Edit
-
-</button>
-
-
-
-
-<button
-
-onClick={()=>deleteDeduction(item.id)}
-
-className="
-bg-red-500
-text-white
-px-4
-py-2
-rounded-lg
-hover:bg-red-600
-"
-
->
-
-Delete
-
-</button>
-
-
-
-</td>
-
-
-</tr>
-
-
-))
-}
-
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-
-
-
-
-{/* MODAL */}
-
-<Modal
-
-title={
-editingId
-?
-"Edit Deduction"
-:
-"Create Deduction"
-}
-
-isOpen={showModal}
-
-onClose={()=>{
-setShowModal(false);
-resetForm();
-}}
-
->
-
-
-
-<div className="grid md:grid-cols-2 gap-5">
-
-
-{
-[
-"name",
-"code"
-].map(field=>(
-
-<input
-
-key={field}
-
-value={(form as any)[field]}
-
-placeholder={field}
-
-className="
-border
-rounded-xl
-p-3
-"
-
-onChange={e=>
-
-setForm({
-
-...form,
-
-[field]:
-
-field==="code"
-?
-e.target.value.toUpperCase()
-:
-e.target.value
-
-})
-
-}
-
-/>
-
-))
-}
-
-
-
-<select
-
-value={form.deductionCountryCode}
-
-className="border rounded-xl p-3"
-
-onChange={e=>
-
-setForm({
-...form,
-deductionCountryCode:e.target.value
-})
-
-}
-
->
-
-<option value="IN">
-India
-</option>
-
-<option value="US">
-USA
-</option>
-
-
-</select>
-
-
-
-
-
-<select
-
-value={form.deductionValueType}
-
-className="border rounded-xl p-3"
-
-onChange={e=>
-
-setForm({
-
-...form,
-
-deductionValueType:
-e.target.value as DeductionMaster["deductionValueType"]
-
-})
-
-}
-
->
-
-
-<option value="PERCENTAGE">
-Percentage
-</option>
-
-<option value="FIXED_AMOUNT">
-Fixed Amount
-</option>
-
-
-</select>
-
-
-
-{
-[
-"defaultValue",
-"minValue",
-"maxValue"
-
-].map(field=>(
-
-
-<input
-
-key={field}
-
-type="number"
-
-value={(form as any)[field]}
-
-placeholder={field}
-
-className="
-border
-rounded-xl
-p-3
-"
-
-onChange={e=>
-
-setForm({
-
-...form,
-
-[field]:
-
-Number(e.target.value)
-
-})
-
-}
-
-/>
-
-
-))
-}
-
-
-
-<div className="flex justify-between items-center border rounded-xl p-4">
-
-Active
-
-<Toggle
-
-checked={form.deductionStatus}
-
-onChange={()=>
-
-setForm({
-...form,
-deductionStatus:!form.deductionStatus
-})
-
-}
-
-/>
-
-</div>
-
-
-</div>
-
-
-
-
-<button
-
-onClick={saveDeduction}
-
-className="
-mt-6
-bg-linear-to-r
-from-indigo-600
-to-purple-600
-text-white
-px-6
-py-3
-rounded-xl
-font-semibold
-"
-
->
-
-Save Deduction
-
-</button>
-
-
-</Modal>
-
-
-</div>
-
-);
-
+      <div className="row g-3 mb-5">
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm h-100">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Total Deductions</p>
+              <h2 className="h2 fw-bold text-primary mb-0">{deductions.length}</h2>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm h-100">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Active Deductions</p>
+              <h2 className="h2 fw-bold text-success mb-0">{deductions.filter((d) => d.deductionStatus).length}</h2>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card border-0 shadow-sm h-100">
+            <div className="card-body">
+              <p className="text-muted small mb-2">Mandatory</p>
+              <h2 className="h2 fw-bold text-secondary mb-0">N/A</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card border shadow-sm mb-5">
+        <div className="card-body">
+          <div className="row g-3">
+            <div className="col-md-6">
+              <input
+                placeholder="Search deduction..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="form-control"
+              />
+            </div>
+            <div className="col-md-6">
+              <select
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                className="form-select"
+              >
+                <option value="ALL">All Countries</option>
+                <option value="IN">India</option>
+                <option value="US">USA</option>
+                <option value="GB">UK</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card border shadow-sm mb-5 overflow-auto">
+        <div className="table-responsive">
+          <table className="table table-sm table-hover mb-0 align-middle">
+            <thead className="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Country</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.map((item) => (
+                <tr key={item.id}>
+                  <td className="fw-semibold">{item.deductionName}</td>
+                  <td>
+                    <span className="badge bg-primary text-white">{item.deductionCode}</span>
+                  </td>
+                  <td>{item.deductionCountryCode}</td>
+                  <td>{item.deductionValueType}</td>
+                  <td className="fw-semibold">{item.deductionDefaultValue}</td>
+                  <td>
+                    <Toggle
+                      checked={item.deductionStatus}
+                      onChange={() =>
+                        setDeductions((prev) =>
+                          prev.map((d) =>
+                            d.id === item.id
+                              ? { ...d, deductionStatus: !d.deductionStatus }
+                              : d,
+                          )
+                        )
+                      }
+                    />
+                  </td>
+                  <td className="d-flex gap-2">
+                    <button onClick={() => openEditModal(item)} className="btn btn-info btn-sm">Edit</button>
+                    <button onClick={() => deleteDeduction(item.id)} className="btn btn-danger btn-sm">Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title={editingId ? "Edit Deduction" : "Create Deduction"}
+        onSave={saveDeduction}
+      >
+        <div className="mb-3">
+          <label className="form-label">Deduction Name</label>
+          <input
+            type="text"
+            value={form.deductionName}
+            onChange={(e) => setForm({ ...form, deductionName: e.target.value })}
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Deduction Code</label>
+          <input
+            type="text"
+            value={form.deductionCode}
+            onChange={(e) => setForm({ ...form, deductionCode: e.target.value })}
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Country</label>
+          <select
+            value={form.deductionCountryCode}
+            onChange={(e) => setForm({ ...form, deductionCountryCode: e.target.value })}
+            className="form-select"
+          >
+            <option value="IN">India</option>
+            <option value="US">USA</option>
+            <option value="GB">UK</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Value Type</label>
+          <select
+            value={form.deductionValueType}
+            onChange={(e) => setForm({ ...form, deductionValueType: e.target.value })}
+            className="form-select"
+          >
+            <option value="PERCENTAGE">Percentage</option>
+            <option value="FIXED">Fixed Amount</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Default Value</label>
+          <input
+            type="number"
+            value={form.deductionDefaultValue}
+            onChange={(e) => setForm({ ...form, deductionDefaultValue: parseFloat(e.target.value) })}
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Min Value</label>
+          <input
+            type="number"
+            value={form.deductionMinValue}
+            onChange={(e) => setForm({ ...form, deductionMinValue: parseFloat(e.target.value) })}
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Max Value</label>
+          <input
+            type="number"
+            value={form.deductionMaxValue}
+            onChange={(e) => setForm({ ...form, deductionMaxValue: parseFloat(e.target.value) })}
+            className="form-control"
+          />
+        </div>
+        <div className="form-check form-switch mb-3">
+          <input
+            type="checkbox"
+            checked={form.taxableStatus}
+            onChange={(e) => setForm({ ...form, taxableStatus: e.target.checked })}
+            className="form-check-input"
+          />
+          <label className="form-check-label">Taxable</label>
+        </div>
+      </Modal>
+    </div>
+  );
 }

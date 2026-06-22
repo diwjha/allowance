@@ -7,36 +7,19 @@ export default function DocumentUploadField({
 }: DocumentUploadFieldProps) {
   return (
     <div
-      className="
-      border
-      border-dashed
-      border-slate-300
-      rounded-2xl
-      p-5
-      bg-slate-50
-      "
+      className="p-4 rounded border border-dashed"
+      style={{
+        borderColor: "#dee2e6",
+        backgroundColor: "#f8f9fa",
+      }}
     >
-      <label
-        className="
-        block
-        text-sm
-        font-semibold
-        text-slate-700
-        mb-3
-        "
-      >
+      <label className="form-label small fw-bold d-block mb-2">
         {label}
       </label>
 
       <input
         type="file"
-        className="
-        w-full
-        border
-        rounded-xl
-        p-3
-        bg-white
-        "
+        className="form-control form-control-sm"
       />
     </div>
   );

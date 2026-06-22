@@ -6,79 +6,29 @@ type StatCardProps = {
 
 export default function StatCard({ title, value, icon }: StatCardProps) {
   return (
-    <div
-      className="
-      bg-white
-      rounded-2xl
-      p-5
-      shadow-sm
-      border
-      border-slate-100
-      hover:shadow-md
-      transition-all
-      duration-300
-      w-full
-      overflow-hidden
-      "
-    >
-      <div
-        className="
-        flex
-        items-center
-        justify-between
-        gap-4
-        "
-      >
+    <div className="card border shadow-sm h-100">
+      <div className="card-body d-flex align-items-center justify-content-between">
         {/* Text Section */}
-
-        <div
-          className="
-          min-w-0
-          flex-1
-          "
-        >
-          <p
-            className="
-            text-slate-500
-            text-sm
-            font-medium
-            truncate
-            "
-            title={title}
-          >
+        <div className="flex-grow-1">
+          <p className="text-muted small fw-medium text-truncate" title={title}>
             {title}
           </p>
 
-          <h2
-            className="
-            text-3xl
-            font-bold
-            mt-2
-            text-slate-800
-            wrap-break-word
-            "
-          >
+          <h3 className="mt-2 fw-bold" style={{ fontSize: "2rem" }}>
             {value}
-          </h2>
+          </h3>
         </div>
 
         {/* Icon */}
-
         <div
-          className="
-          h-14
-          w-14
-          shrink-0
-          rounded-2xl
-          bg-linear-to-r
-          from-indigo-500
-          to-purple-500
-          text-white
-          flex
-          items-center
-          justify-center
-          text-2xl
-          "
+          className="text-white fw-bold d-flex align-items-center justify-content-center"
+          style={{
+            height: "3.5rem",
+            width: "3.5rem",
+            borderRadius: "8px",
+            backgroundColor: "#0d3b66",
+            fontSize: "1.5rem",
+          }}
         >
           {icon}
         </div>
