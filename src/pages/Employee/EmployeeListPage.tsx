@@ -1,16 +1,8 @@
-import {
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import EmployeeWizardPage from "./EmployeeWizardPage";
 
-import {
-  getEmployees,
-  deleteEmployee,
-} from "../../services/employeeService";
-
+import { getEmployees, getEmployeeById } from "../../services/employeeService";
 interface Employee {
   employeeCode: string;
   firstName: string;
@@ -26,14 +18,11 @@ interface Employee {
 export default function EmployeeListPage() {
   const [search, setSearch] = useState("");
 
-  const [showWizard, setShowWizard] =
-    useState(false);
+  const [showWizard, setShowWizard] = useState(false);
 
-  const [employees, setEmployees] =
-    useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
   // ===========================
   // LOAD EMPLOYEES
@@ -43,22 +32,13 @@ export default function EmployeeListPage() {
     try {
       setLoading(true);
 
-      const response =
-        await getEmployees();
+      const response = await getEmployees();
 
-      console.log(
-        "Employee API Response",
-        response
-      );
+      console.log("Employee API Response", response);
 
-      setEmployees(
-        response.content || []
-      );
+      setEmployees(response.content || []);
     } catch (error) {
-      console.error(
-        "Failed to load employees",
-        error
-      );
+      console.error("Failed to load employees", error);
     } finally {
       setLoading(false);
     }
@@ -69,33 +49,38 @@ export default function EmployeeListPage() {
   }, []);
 
   // ===========================
-  // DELETE EMPLOYEE
+  // VIEW EMPLOYEE
   // ===========================
 
-  const handleDelete = async (
-    employeeCode: string
-  ) => {
-    const confirmDelete =
-      window.confirm(
-        "Delete this employee?"
-      );
-
-    if (!confirmDelete) return;
-
+  const handleView = async (employeeCode: string) => {
     try {
-      await deleteEmployee(
-        employeeCode
-      );
-
-      await loadEmployees();
+      const employee = await getEmployeeById(employeeCode);
 
       alert(
-        "Employee deleted successfully"
+        `
+Employee Code: ${employee.employeeCode}
+
+Name: ${employee.firstName} ${employee.lastName}
+
+Position: ${employee.position}
+
+Department: ${employee.departmentName}
+
+Ministry: ${employee.ministryName}
+
+Mobile: ${employee.mobileNumber}
+
+Email: ${employee.email}
+
+Employment Type: ${employee.employmentType}
+
+Date Of Joining: ${employee.dateOfJoining}
+      `,
       );
     } catch (error) {
       console.error(error);
 
-      alert("Delete failed");
+      alert("Failed to load employee details");
     }
   };
 
@@ -103,43 +88,19 @@ export default function EmployeeListPage() {
   // SEARCH FILTER
   // ===========================
 
-  const filteredEmployees =
-    useMemo(() => {
-      return employees.filter(
-        (emp) => {
-          const fullName =
-            `${emp.firstName} ${emp.lastName}`;
+  const filteredEmployees = useMemo(() => {
+    return employees.filter((emp) => {
+      const fullName = `${emp.firstName} ${emp.lastName}`;
 
-          return (
-            emp.employeeCode
-              ?.toLowerCase()
-              .includes(
-                search.toLowerCase()
-              ) ||
-            fullName
-              .toLowerCase()
-              .includes(
-                search.toLowerCase()
-              ) ||
-            emp.position
-              ?.toLowerCase()
-              .includes(
-                search.toLowerCase()
-              ) ||
-            emp.departmentName
-              ?.toLowerCase()
-              .includes(
-                search.toLowerCase()
-              ) ||
-            emp.ministryName
-              ?.toLowerCase()
-              .includes(
-                search.toLowerCase()
-              )
-          );
-        }
+      return (
+        emp.employeeCode?.toLowerCase().includes(search.toLowerCase()) ||
+        fullName.toLowerCase().includes(search.toLowerCase()) ||
+        emp.position?.toLowerCase().includes(search.toLowerCase()) ||
+        emp.departmentName?.toLowerCase().includes(search.toLowerCase()) ||
+        emp.ministryName?.toLowerCase().includes(search.toLowerCase())
       );
-    }, [employees, search]);
+    });
+  }, [employees, search]);
 
   // ===========================
   // SHOW WIZARD
@@ -149,9 +110,7 @@ export default function EmployeeListPage() {
     return (
       <div className="mb-4">
         <button
-          onClick={() =>
-            setShowWizard(false)
-          }
+          onClick={() => setShowWizard(false)}
           className="btn btn-secondary btn-sm"
         >
           ← Back To Employee List
@@ -182,15 +141,12 @@ export default function EmployeeListPage() {
               </h1>
 
               <p className="text-white-50 mb-0">
-                Manage employee lifecycle
-                and payroll.
+                Manage employee lifecycle and payroll.
               </p>
             </div>
 
             <button
-              onClick={() =>
-                setShowWizard(true)
-              }
+              onClick={() => setShowWizard(true)}
               className="btn btn-light btn-sm fw-bold"
             >
               + Add Employee
@@ -205,13 +161,9 @@ export default function EmployeeListPage() {
         <div className="col-lg-3">
           <div className="card shadow-sm">
             <div className="card-body">
-              <p className="text-muted small mb-2">
-                Total Employees
-              </p>
+              <p className="text-muted small mb-2">Total Employees</p>
 
-              <h2 className="h2 fw-bold mb-0">
-                {employees.length}
-              </h2>
+              <h2 className="h2 fw-bold mb-0">{employees.length}</h2>
             </div>
           </div>
         </div>
@@ -219,17 +171,12 @@ export default function EmployeeListPage() {
         <div className="col-lg-3">
           <div className="card shadow-sm">
             <div className="card-body">
-              <p className="text-muted small mb-2">
-                Permanent
-              </p>
+              <p className="text-muted small mb-2">Permanent</p>
 
               <h2 className="h2 fw-bold text-success mb-0">
                 {
-                  employees.filter(
-                    (e) =>
-                      e.employmentType ===
-                      "PERMANENT"
-                  ).length
+                  employees.filter((e) => e.employmentType === "PERMANENT")
+                    .length
                 }
               </h2>
             </div>
@@ -239,17 +186,12 @@ export default function EmployeeListPage() {
         <div className="col-lg-3">
           <div className="card shadow-sm">
             <div className="card-body">
-              <p className="text-muted small mb-2">
-                Contract
-              </p>
+              <p className="text-muted small mb-2">Contract</p>
 
               <h2 className="h2 fw-bold text-warning mb-0">
                 {
-                  employees.filter(
-                    (e) =>
-                      e.employmentType ===
-                      "CONTRACT"
-                  ).length
+                  employees.filter((e) => e.employmentType === "CONTRACT")
+                    .length
                 }
               </h2>
             </div>
@@ -259,19 +201,10 @@ export default function EmployeeListPage() {
         <div className="col-lg-3">
           <div className="card shadow-sm">
             <div className="card-body">
-              <p className="text-muted small mb-2">
-                Departments
-              </p>
+              <p className="text-muted small mb-2">Departments</p>
 
               <h2 className="h2 fw-bold text-primary mb-0">
-                {
-                  new Set(
-                    employees.map(
-                      (e) =>
-                        e.departmentName
-                    )
-                  ).size
-                }
+                {new Set(employees.map((e) => e.departmentName)).size}
               </h2>
             </div>
           </div>
@@ -286,11 +219,7 @@ export default function EmployeeListPage() {
             type="text"
             placeholder="Search Employee..."
             value={search}
-            onChange={(e) =>
-              setSearch(
-                e.target.value
-              )
-            }
+            onChange={(e) => setSearch(e.target.value)}
             className="form-control"
           />
         </div>
@@ -303,33 +232,19 @@ export default function EmployeeListPage() {
           <table className="table table-sm table-hover mb-0">
             <thead className="table-light">
               <tr>
-                <th className="fw-bold">
-                  Employee Code
-                </th>
+                <th className="fw-bold">Employee Code</th>
 
-                <th className="fw-bold">
-                  Name
-                </th>
+                <th className="fw-bold">Name</th>
 
-                <th className="fw-bold">
-                  Position
-                </th>
+                <th className="fw-bold">Position</th>
 
-                <th className="fw-bold">
-                  Department
-                </th>
+                <th className="fw-bold">Department</th>
 
-                <th className="fw-bold">
-                  Ministry
-                </th>
+                <th className="fw-bold">Ministry</th>
 
-                <th className="fw-bold">
-                  Mobile
-                </th>
+                <th className="fw-bold">Mobile</th>
 
-                <th className="fw-bold">
-                  Actions
-                </th>
+                <th className="fw-bold">Actions</th>
               </tr>
             </thead>
 
@@ -346,8 +261,7 @@ export default function EmployeeListPage() {
                     Loading...
                   </td>
                 </tr>
-              ) : filteredEmployees.length ===
-                0 ? (
+              ) : filteredEmployees.length === 0 ? (
                 <tr>
                   <td
                     colSpan={7}
@@ -361,73 +275,34 @@ export default function EmployeeListPage() {
                   </td>
                 </tr>
               ) : (
-                filteredEmployees.map(
-                  (emp) => (
-                    <tr
-                      key={
-                        emp.employeeCode
-                      }
-                    >
-                      <td>
-                        {
-                          emp.employeeCode
-                        }
-                      </td>
+                filteredEmployees.map((emp) => (
+                  <tr key={emp.employeeCode}>
+                    <td>{emp.employeeCode}</td>
 
-                      <td>
-                        {emp.firstName}{" "}
-                        {emp.lastName}
-                      </td>
+                    <td>
+                      {emp.firstName} {emp.lastName}
+                    </td>
 
-                      <td>
-                        {emp.position}
-                      </td>
+                    <td>{emp.position}</td>
 
-                      <td>
-                        {
-                          emp.departmentName
-                        }
-                      </td>
+                    <td>{emp.departmentName}</td>
 
-                      <td>
-                        {
-                          emp.ministryName
-                        }
-                      </td>
+                    <td>{emp.ministryName}</td>
 
-                      <td>
-                        {
-                          emp.mobileNumber
-                        }
-                      </td>
+                    <td>{emp.mobileNumber}</td>
 
-                      <td className="d-flex gap-2">
-                        <button
-                          className="btn btn-info btn-sm"
-                        >
-                          View
-                        </button>
+                    <td className="d-flex gap-2">
+                      <button
+                        onClick={() => handleView(emp.employeeCode)}
+                        className="btn btn-info btn-sm"
+                      >
+                        View
+                      </button>
 
-                        <button
-                          className="btn btn-success btn-sm"
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          onClick={() =>
-                            handleDelete(
-                              emp.employeeCode
-                            )
-                          }
-                          className="btn btn-danger btn-sm"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  )
-                )
+                      <button className="btn btn-success btn-sm">Edit</button>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
